@@ -1,0 +1,1719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>InsPyre: Learn Python step by step</title>
+<meta name="description" content="InsPyre is a free, step-by-step Python course that runs in your browser, with lessons and practice at three levels.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%232A2731'/%3E%3Ctext x='32' y='42' font-family='Arial,sans-serif' font-size='28' font-weight='600' text-anchor='middle' fill='%23E9A23B'%3EPy%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,400;0,500;0,600;1,400&family=DM+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/skulpt@1.2.0/dist/skulpt.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/skulpt@1.2.0/dist/skulpt-stdlib.js"></script>
+<style>
+:root{
+  --paper:#F7F5F2; --surface:#FFFFFF; --surface-2:#F3F0EB; --ink:#2A2731; --muted:#6E6A74; --line:#E8E3DB;
+  --brand:#2A2731; --brand-ink:#FFFFFF; --on-accent:#FFFFFF; --sun:#E9A23B; --sun-soft:#FCF1DE; --sun-ink:#7A4D0B;
+  --leaf:#3F8A62; --leaf-soft:#E8F3EC; --berry:#B4456A; --berry-soft:#F9EAEF;
+  --t1:#3F8A62; --t2:#A86510; --t3:#7D57B5; --t1-soft:#E8F3EC; --t2-soft:#FBEFDC; --t3-soft:#F1EBF8;
+  --ed-bg:#FFFDFA; --ed-gutter:#FFFDFA; --ed-ink:#2A2731; --ed-dim:#C6C0B6; --ed-sel:rgba(233,162,59,.25); --caret:#C27A16;
+  --hl-k:#9B3F8C; --hl-s:#3D7A52; --hl-n:#B3611A; --hl-c:#A8A196; --hl-b:#2F6CA8; --hl-f:#6A4FB0;
+  --font-ui:"Figtree", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-display:"Figtree", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-code:"DM Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top, 0px);
+  padding-bottom:env(safe-area-inset-bottom, 0px);
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#18161C; --surface:#211F27; --surface-2:#2A2730; --ink:#EEEAE3; --muted:#A39EA8; --line:#35313D;
+    --brand:#EEEAE3; --brand-ink:#1C1A21; --on-accent:#1C1A21; --sun:#F0B45A; --sun-soft:#3A2D18; --sun-ink:#FBDDAA;
+    --leaf:#6CC394; --leaf-soft:#1E3328; --berry:#F08AAA; --berry-soft:#3A1F2A;
+    --t1:#6CC394; --t2:#F0B45A; --t3:#B596E6; --t1-soft:#1E3328; --t2-soft:#3A2D18; --t3-soft:#2D2440;
+    --ed-bg:#1D1B22; --ed-gutter:#1D1B22; --ed-ink:#EEEAE3; --ed-dim:#5D5866; --ed-sel:rgba(240,180,90,.25); --caret:#F0B45A;
+    --hl-k:#E79AD6; --hl-s:#9AD4A8; --hl-n:#F3BE7C; --hl-c:#7D7787; --hl-b:#8EC1F0; --hl-f:#C3AEF5;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#18161C; --surface:#211F27; --surface-2:#2A2730; --ink:#EEEAE3; --muted:#A39EA8; --line:#35313D;
+  --brand:#EEEAE3; --brand-ink:#1C1A21; --on-accent:#1C1A21; --sun:#F0B45A; --sun-soft:#3A2D18; --sun-ink:#FBDDAA;
+  --leaf:#6CC394; --leaf-soft:#1E3328; --berry:#F08AAA; --berry-soft:#3A1F2A;
+  --t1:#6CC394; --t2:#F0B45A; --t3:#B596E6; --t1-soft:#1E3328; --t2-soft:#3A2D18; --t3-soft:#2D2440;
+  --ed-bg:#1D1B22; --ed-gutter:#1D1B22; --ed-ink:#EEEAE3; --ed-dim:#5D5866; --ed-sel:rgba(240,180,90,.25); --caret:#F0B45A;
+  --hl-k:#E79AD6; --hl-s:#9AD4A8; --hl-n:#F3BE7C; --hl-c:#7D7787; --hl-b:#8EC1F0; --hl-f:#C3AEF5;
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{height:100%; scroll-padding-top:env(safe-area-inset-top, 0px)}
+body{margin:0; height:100%; background:var(--paper); color:var(--ink); font-family:var(--font-ui); font-size:16px; line-height:1.6; display:flex; flex-direction:column; font-synthesis-weight:none; -webkit-font-smoothing:antialiased}
+button,select,input,textarea{font:inherit; color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--sun); outline-offset:2px; border-radius:6px}
+code{font-family:var(--font-code); font-size:.88em; background:var(--surface-2); border:1px solid var(--line); padding:.05em .35em; border-radius:5px}
+h1,h2,h3{font-family:var(--font-display); font-weight:600; line-height:1.2; margin:0}
+.linkish{background:none; border:0; padding:0; color:var(--muted); text-decoration:underline; text-underline-offset:3px; font-size:.88rem}
+.linkish:hover{color:var(--ink)}
+
+/* Top bar */
+.topbar{display:flex; align-items:center; gap:16px; padding:10px 20px; flex:0 0 auto}
+.brand{font-family:var(--font-display); font-weight:600; font-size:1.2rem; letter-spacing:-.01em}
+.brand span{color:var(--sun)}
+.switch-wrap{position:relative}
+.switch{display:flex; align-items:center; gap:10px; border:1px solid var(--line); background:var(--surface); border-radius:99px; padding:4px 14px 4px 5px; max-width:min(52vw, 420px)}
+.switch .label{white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-weight:700}
+.switch .label small{font-weight:400; color:var(--muted); margin-right:6px}
+.caret{width:8px; height:8px; border-right:2px solid var(--muted); border-bottom:2px solid var(--muted); transform:rotate(45deg) translate(-2px,-2px); flex:0 0 auto}
+.ring{flex:0 0 auto; width:28px; height:28px; border-radius:50%; display:grid; place-items:center; background:conic-gradient(var(--leaf) calc(var(--p,0) * 1%), var(--line) 0)}
+.ring b{width:22px; height:22px; border-radius:50%; background:var(--surface); display:grid; place-items:center; font-family:var(--font-display); font-size:.8rem}
+.ring.done b{background:var(--leaf); color:var(--on-accent)}
+.menu{position:absolute; top:calc(100% + 8px); left:0; width:330px; max-width:calc(100vw - 32px); background:var(--surface); border:1px solid var(--line); border-radius:16px; box-shadow:0 18px 40px rgba(10,20,40,.18); padding:8px; z-index:30}
+.menu[hidden]{display:none}
+.menu ol{list-style:none; margin:0; padding:0; max-height:60vh; overflow:auto}
+.menu-item{display:flex; align-items:center; gap:12px; width:100%; border:0; background:none; text-align:left; padding:8px 10px; border-radius:10px}
+.menu-item:hover{background:var(--surface-2)}
+.menu-item[aria-current="true"]{background:var(--sun-soft)}
+.menu-item span{display:flex; flex-direction:column; line-height:1.25}
+.menu-item small{color:var(--muted)}
+.menu-foot{border-top:1px solid var(--line); margin-top:6px; padding:10px 10px 4px; display:flex; align-items:center; gap:10px; font-size:.88rem; color:var(--muted)}
+.menu-foot .linkish{margin-left:auto}
+.level-pick{margin-left:auto}
+.level-pick select{padding:6px 10px; border-radius:99px; border:1px solid var(--line); background:var(--surface); color:var(--ink); font-size:.9rem}
+
+/* Layout */
+.app{flex:1 1 auto; min-height:0; display:grid; grid-template-columns:minmax(340px,1fr) minmax(380px,1.1fr); gap:18px; padding:4px 20px 20px}
+
+/* Deck: one lesson part at a time */
+.deck{display:flex; flex-direction:column; min-height:0; min-width:0; background:var(--surface); border-radius:20px; overflow:hidden; box-shadow:0 1px 2px rgba(40,30,20,.05)}
+.deck-head{display:flex; align-items:center; gap:14px; padding:16px 24px 6px}
+.deck-head h1{font-size:1rem; font-weight:500; color:var(--muted)}
+.dots{display:flex; gap:6px; margin-left:auto}
+.dot{width:9px; height:9px; padding:0; border:0; border-radius:99px; background:var(--line); transition:width .2s ease, background .2s ease}
+.dot[aria-current="true"]{width:24px; background:var(--ink)}
+.dot.prac{background:transparent; box-shadow:inset 0 0 0 2px var(--line)}
+.dot.prac[aria-current="true"]{background:var(--ink); box-shadow:none}
+.track{flex:1 1 auto; min-height:0; display:flex; overflow-x:auto; overflow-y:hidden; scroll-snap-type:x mandatory; scrollbar-width:none; overscroll-behavior-x:contain}
+.track::-webkit-scrollbar{display:none}
+.card{flex:0 0 100%; min-width:0; scroll-snap-align:start; scroll-snap-stop:always; overflow-y:auto; padding:14px 24px 28px}
+.card-inner{max-width:62ch}
+.step-label{font-size:.85rem; color:var(--muted); margin:0 0 6px}
+.card h2{font-size:clamp(1.45rem, 2.2vw, 1.85rem); font-weight:600; letter-spacing:-.015em; margin-bottom:10px}
+.card p{margin:0 0 12px}
+.lead{font-size:1.15rem}
+.outline{margin:6px 0 18px; padding-left:1.3em; color:var(--muted)}
+.outline li{margin:3px 0}
+.example{background:var(--surface-2); border-radius:12px; overflow:hidden; margin-top:14px}
+.example pre{margin:0; padding:14px 16px; overflow-x:auto; font-family:var(--font-code); font-size:13.5px; line-height:1.6; color:var(--ed-ink)}
+.example-bar{display:flex; justify-content:flex-end; padding:0 8px 8px}
+.try-btn{border:1px solid var(--line); background:var(--surface); color:var(--ink); font-weight:700; font-size:.85rem; padding:5px 12px; border-radius:8px}
+.try-btn:hover{border-color:var(--sun)}
+.note{border-radius:12px; padding:12px 16px; margin:14px 0}
+.note.tip{background:var(--leaf-soft)}
+.note.warn{background:var(--sun-soft)}
+.note strong{display:block; margin-bottom:2px}
+.note p{margin:0}
+.fold{border-top:1px solid var(--line); margin-top:14px}
+.fold:last-child{border-bottom:1px solid var(--line)}
+.fold > summary{cursor:pointer; list-style:none; padding:12px 0; font-weight:700; display:flex; align-items:center; gap:10px}
+.fold > summary::-webkit-details-marker{display:none}
+.fold > summary::after{content:""; margin-left:auto; width:8px; height:8px; border-right:2px solid var(--muted); border-bottom:2px solid var(--muted); transform:rotate(45deg); transition:transform .2s ease}
+.fold[open] > summary::after{transform:rotate(-135deg)}
+.fold-body{padding:0 0 14px}
+.fold + .fold{margin-top:0}
+.deck-nav{display:flex; align-items:center; gap:10px; padding:10px 18px 16px}
+.deck-nav .next{margin-left:auto; max-width:70%}
+.deck-nav .next span{white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+
+.btn{border:1px solid var(--line); background:var(--surface); padding:8px 16px; border-radius:10px; font-weight:700; display:inline-flex; align-items:center; gap:8px}
+.btn:hover{background:var(--surface-2)}
+.btn.primary{background:var(--brand); border-color:var(--brand); color:var(--brand-ink)}
+.btn.primary:hover{filter:brightness(1.07); background:var(--brand)}
+.btn.run{background:var(--leaf); border-color:var(--leaf); color:var(--on-accent)}
+.btn.run:hover{filter:brightness(1.07); background:var(--leaf)}
+.btn.quiet{border-color:transparent; background:transparent; color:var(--muted)}
+.btn.quiet:hover{background:var(--surface-2); color:var(--ink)}
+.btn:disabled{opacity:.45; cursor:default}
+.btn.quiet:disabled:hover{background:transparent}
+
+/* Practice card */
+.prac-top{display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:4px}
+.prac-top h2{margin:0}
+.seg{display:inline-flex; padding:3px; background:var(--surface-2); border:1px solid var(--line); border-radius:99px; margin-left:auto}
+.seg button{border:0; background:none; padding:5px 13px; border-radius:99px; font-size:.88rem; font-weight:700; color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--surface); color:var(--ink); box-shadow:0 1px 3px rgba(40,30,20,.12)}
+.tier-blurb{color:var(--muted); font-size:.9rem; margin:4px 0 16px !important}
+.pips{display:flex; gap:6px; align-items:center; margin-bottom:14px}
+.pip{width:30px; height:30px; border-radius:50%; border:2px solid var(--line); background:var(--surface); font-weight:700; font-size:.85rem; display:grid; place-items:center}
+.pip[aria-current="true"]{border-color:var(--ink)}
+.pip.solved{background:var(--leaf); border-color:var(--leaf); color:var(--on-accent)}
+.pip.helped{border-color:var(--leaf); color:var(--leaf)}
+.pip.solved[aria-current="true"]{box-shadow:0 0 0 2px var(--surface), 0 0 0 4px var(--ink)}
+.pips .of{margin-left:6px; font-size:.85rem; color:var(--muted)}
+.ex-title{font-size:1.25rem; margin-bottom:6px}
+.ex-prompt p{margin:6px 0}
+.hint{background:var(--sun-soft); color:var(--sun-ink); padding:10px 14px; border-radius:10px; margin-bottom:8px; font-size:.95rem}
+.hint b{margin-right:6px}
+.small{font-size:.86rem; color:var(--muted)}
+.nudge{margin-top:16px; font-size:.92rem; color:var(--muted)}
+.nudge .linkish{color:var(--brand); font-size:inherit; margin-left:4px}
+.badge{display:inline-flex; font-size:.78rem; font-weight:700; padding:2px 9px; border-radius:99px}
+.badge.starter{background:var(--t1-soft); color:var(--t1)}
+.badge.core{background:var(--t2-soft); color:var(--t2)}
+.badge.challenge{background:var(--t3-soft); color:var(--t3)}
+
+/* Workspace */
+.workspace{display:flex; flex-direction:column; min-height:0; min-width:0; gap:10px}
+.ws-head{display:flex; align-items:center; gap:10px; flex-wrap:wrap; min-height:38px}
+.ws-context{display:flex; align-items:center; gap:8px; min-width:0; font-weight:700}
+.ws-context .title{white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.ws-actions{margin-left:auto; display:flex; gap:8px; align-items:center}
+.editor{flex:1 1 62%; min-height:220px; display:flex; background:var(--ed-bg); border:1px solid var(--line); border-radius:20px; overflow:hidden; transition:border-color .2s ease, box-shadow .2s ease}
+.gutter{flex:0 0 auto; background:var(--ed-gutter); color:var(--ed-dim); font-family:var(--font-code); font-size:14px; line-height:1.6; padding:14px 10px 14px 14px; text-align:right; overflow:hidden; white-space:pre; user-select:none; min-width:44px}
+.gutter .err{color:#fff; background:var(--berry); border-radius:4px; padding:0 4px; margin-right:-4px}
+.code-wrap{position:relative; flex:1 1 auto; min-width:0}
+.code-wrap pre,.code-wrap textarea{position:absolute; inset:0; margin:0; padding:14px 16px; font-family:var(--font-code); font-size:14px; line-height:1.6; tab-size:4; white-space:pre; overflow:auto; border:0; letter-spacing:0; word-spacing:0}
+.code-wrap pre{color:var(--ed-ink); pointer-events:none; overflow:hidden}
+.code-wrap pre code{background:none; border:0; padding:0; font-size:inherit}
+.code-wrap textarea{background:transparent; color:transparent; caret-color:var(--caret); resize:none; outline:none}
+.code-wrap textarea::selection{background:var(--ed-sel); color:transparent}
+.editor:focus-within{border-color:var(--sun); box-shadow:0 0 0 3px var(--sun-soft)}
+.tk-k{color:var(--hl-k)} .tk-s{color:var(--hl-s)} .tk-n{color:var(--hl-n)} .tk-c{color:var(--hl-c); font-style:italic} .tk-b{color:var(--hl-b)} .tk-f{color:var(--hl-f)}
+
+.feedback{border-radius:14px; padding:12px 16px; font-size:.95rem; display:flex; gap:12px; align-items:flex-start; flex-wrap:wrap}
+.feedback[hidden]{display:none}
+.feedback.pass{background:var(--leaf-soft); border-left:5px solid var(--leaf)}
+.feedback.fail{background:var(--berry-soft); border-left:5px solid var(--berry)}
+.feedback .fb-text{flex:1 1 260px}
+.feedback .fb-text strong{display:block; margin-bottom:2px}
+.feedback pre{font-family:var(--font-code); font-size:13px; background:var(--surface); border:1px solid var(--line); border-radius:8px; padding:6px 10px; margin:6px 0 0; white-space:pre-wrap}
+.fb-compare{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:6px}
+.fb-compare small{color:var(--muted); font-weight:700}
+
+.console{flex:1 1 38%; min-height:120px; display:flex; flex-direction:column; background:var(--surface); border-radius:20px; overflow:hidden; box-shadow:0 1px 2px rgba(40,30,20,.05)}
+.console-head{display:flex; align-items:center; padding:8px 16px; font-weight:700; font-size:.88rem; color:var(--muted)}
+.console-head .linkish{margin-left:auto; font-weight:400}
+.output{flex:1 1 auto; overflow:auto; padding:2px 16px 14px; font-family:var(--font-code); font-size:13.5px; line-height:1.55; white-space:pre-wrap; word-break:break-word}
+.output .muted{color:var(--muted); font-family:var(--font-ui); font-style:italic}
+.err-card{font-family:var(--font-ui); background:var(--berry-soft); border-radius:12px; padding:12px 14px; margin-top:8px; white-space:normal}
+.err-card .err-type{font-weight:700; color:var(--berry)}
+.err-card .err-raw{font-family:var(--font-code); font-size:12.5px; color:var(--muted); margin-top:2px}
+.err-card p{margin:8px 0 0}
+.err-card .err-line{font-family:var(--font-code); font-size:13px; background:var(--surface); border-radius:6px; padding:4px 8px; margin-top:8px; display:block; white-space:pre; overflow-x:auto}
+
+/* Welcome */
+.overlay{position:fixed; inset:0; background:rgba(10,18,34,.55); display:grid; place-items:center; padding:20px; z-index:50}
+.overlay[hidden]{display:none}
+.welcome{background:var(--surface); border-radius:24px; max-width:720px; width:100%; padding:34px 34px 28px; max-height:100%; overflow:auto}
+.welcome h1{font-size:clamp(1.8rem, 4vw, 2.4rem); font-weight:600; letter-spacing:-.02em; max-width:18ch}
+.welcome > p{color:var(--muted); max-width:58ch; margin:10px 0 22px}
+.welcome h2{font-size:1.05rem; font-family:var(--font-ui); margin-bottom:10px}
+.level-cards{display:grid; grid-template-columns:repeat(3,1fr); gap:12px}
+.level-card{border:2px solid var(--line); background:var(--surface-2); border-radius:18px; padding:16px; text-align:left; display:flex; flex-direction:column; gap:6px}
+.level-card:hover{border-color:var(--ink)}
+.level-card strong{font-family:var(--font-display); font-size:1.15rem}
+.level-card span{color:var(--muted); font-size:.9rem}
+.welcome .fine{font-size:.85rem; color:var(--muted); margin-top:16px}
+.engine-warn{background:var(--berry-soft); padding:10px 14px; border-radius:12px; font-size:.9rem}
+
+@media (max-width:900px){
+  html,body{height:auto}
+  body{display:block}
+  .app{display:flex; flex-direction:column; padding:4px 12px 20px}
+  .deck{height:min(76vh, 640px)}
+  .editor{flex:none; height:300px}
+  .console{flex:none; height:200px}
+  .topbar{flex-wrap:wrap; padding:10px 12px; gap:10px}
+  .switch-wrap{order:3; width:100%}
+  .switch{max-width:100%; width:100%}
+  .switch .caret{margin-left:auto}
+  .level-cards{grid-template-columns:1fr}
+  .welcome{padding:24px 20px}
+  .fb-compare{grid-template-columns:1fr}
+  .card{padding:12px 18px 24px}
+  .deck-head{padding:14px 18px 4px}
+}
+@media (prefers-reduced-motion: reduce){
+  *{transition:none !important; animation:none !important}
+}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">Ins<span>Py</span>re</div>
+  <div class="switch-wrap">
+    <button class="switch" id="switchBtn" aria-haspopup="true" aria-expanded="false" aria-controls="lessonMenu"></button>
+    <div class="menu" id="lessonMenu" hidden></div>
+  </div>
+  <label class="level-pick">
+    <select id="levelSelect" aria-label="My level">
+      <option value="starter">New to Python</option>
+      <option value="core">Some experience</option>
+      <option value="challenge">Ready for challenges</option>
+    </select>
+  </label>
+</header>
+
+<div class="app">
+  <section class="deck" id="deck" aria-label="Lesson"></section>
+  <section class="workspace" aria-label="Code editor and output">
+    <div class="ws-head">
+      <div class="ws-context" id="wsContext"></div>
+      <div class="ws-actions">
+        <button class="linkish" id="resetBtn" title="Put the starting code back">Reset</button>
+        <button class="btn primary" id="checkBtn" title="Check answer (Ctrl+Shift+Enter)">Check answer</button>
+        <button class="btn run" id="runBtn" title="Run (Ctrl+Enter)">Run</button>
+      </div>
+    </div>
+    <div class="editor">
+      <div class="gutter" id="gutter" aria-hidden="true">1</div>
+      <div class="code-wrap">
+        <pre aria-hidden="true"><code id="hl"></code></pre>
+        <textarea id="code" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off" aria-label="Python code editor. Ctrl+Enter runs. Press Escape, then Tab, to move focus out."></textarea>
+      </div>
+    </div>
+    <div class="feedback" id="feedback" hidden aria-live="polite"></div>
+    <div class="console">
+      <div class="console-head">Output <button class="linkish" id="clearBtn">Clear</button></div>
+      <div class="output" id="output" aria-live="polite"></div>
+    </div>
+  </section>
+</div>
+
+<div class="overlay" id="welcome" hidden>
+  <div class="welcome" role="dialog" aria-modal="true" aria-labelledby="wTitle">
+    <h1 id="wTitle">Welcome to InsPyre</h1>
+    <p>Learn Python one small step at a time. Nine short lessons take you from your first variable to writing your own functions. Every lesson has practice at three levels, so you can start where you are and move up when you’re ready.</p>
+    <h2>Where are you starting?</h2>
+    <div class="level-cards">
+      <button class="level-card" data-level="starter"><strong>I’m brand new</strong><span>Extra tips, code that’s partly written for you, and gentle first problems.</span></button>
+      <button class="level-card" data-level="core"><strong>I’ve tried a little</strong><span>Quick explanations, then problems you solve on your own.</span></button>
+      <button class="level-card" data-level="challenge"><strong>I’ve coded before</strong><span>Deeper notes and challenge problems that combine ideas.</span></button>
+    </div>
+    <p class="fine">You can change your level anytime from the top bar, and every level’s problems stay open to you.</p>
+    <div class="engine-warn" id="engineWarn" hidden>The Python engine didn’t load, so code won’t run yet. Check your internet connection and reload the page.</div>
+  </div>
+</div>
+
+<script>
+/* ================= LESSON CONTENT ================= */
+const TIERS = [
+  {id:"starter",  name:"Starter",   blurb:"Small steps, with some code already written for you."},
+  {id:"core",     name:"Core",      blurb:"Use the idea on your own, from a nearly blank editor."},
+  {id:"challenge",name:"Challenge", blurb:"Tougher problems that combine ideas. Your code is also tested with new values, so it has to work in general."}
+];
+
+const LESSONS = [
+{
+  id:"vars", title:"Variables", summary:"Store a value under a name so you can use it, change it, and print it later.",
+  sections:[
+    {h:"Showing output with print()", p:"<code>print()</code> shows whatever you put between its parentheses. Text needs quotes around it; numbers don’t. Separate several things with commas.", code:
+`print("Hello, world!")
+print(42)
+print("Two plus three is", 2 + 3)`},
+    {h:"Creating a variable", p:"A variable is a name attached to a value. The <code>=</code> sign means “store this value under this name.” It isn’t the “equals” from math class.", code:
+`favorite_food = "tacos"
+lucky_number = 7
+print(favorite_food)
+print(lucky_number)`},
+    {h:"Changing a variable", p:"Assign a new value and the old one is replaced. You can use a variable’s current value to work out its next one.", code:
+`points = 10
+print(points)
+points = points + 5
+print(points)`},
+    {h:"Naming rules", p:"Names can use letters, digits and underscores, but can’t start with a digit. They’re case-sensitive, so <code>Score</code> and <code>score</code> are different variables. Python style is <code>snake_case</code>: lowercase words joined by underscores.", code:
+`player_name = "Kai"
+level2_score = 300
+print(player_name, level2_score)`}
+  ],
+  tip:"Read <code>=</code> out loud as “gets.” <code>points = 10</code> becomes “points gets 10,” and <code>points = points + 5</code> becomes “points gets points plus 5.”",
+  mistake:"Forgetting quotes around text. <code>print(hello)</code> looks for a variable called hello; <code>print(\"hello\")</code> shows the word.",
+  deeper:"Python can assign several variables at once: <code>x, y = 3, 4</code>. The same trick swaps two values in one line: <code>x, y = y, x</code>. Python works out the whole right side before it assigns anything.",
+  exercises:[
+    {id:"v1", tier:"starter", title:"Name tag",
+     prompt:"<p>Create a variable called <code>name</code> that stores your name as text. Then print it.</p>",
+     starter:`# Create your variable on the next line\n\n# Print it\n`,
+     hints:["Text values go inside quotes, like <code>\"Sam\"</code>.","The pattern is <code>name = \"Sam\"</code>. Then <code>print(name)</code>, with no quotes around the variable name."],
+     solution:`name = "Sam"\nprint(name)`,
+     tests:`assert isinstance(name, str), "name should hold text, in quotes"\nassert len(name) > 0, "name should not be empty"`,
+     must:[[/print\s*\(\s*name\s*\)/, "Use print(name) to show the value stored in your variable."]]},
+    {id:"v2", tier:"starter", title:"Restock the apples",
+     prompt:"<p>The store had 5 apples. A delivery arrives. On the empty line, change <code>apples</code> to 8.</p>",
+     starter:`apples = 5\n\n# Change apples to 8 on the next line\n\nprint(apples)\n`,
+     hints:["You don’t need a new variable. Give <code>apples</code> a new value.","Write <code>apples = 8</code> between the first line and the print line."],
+     solution:`apples = 5\napples = 8\nprint(apples)`,
+     tests:`assert apples == 8, "apples should be 8 at the end"`, expect:"8",
+     must:[[/apples\s*=\s*5/, "Keep the first line, apples = 5, so you practice changing a variable."]]},
+    {id:"v3", tier:"core", title:"Score keeper",
+     prompt:"<p><code>score</code> starts at 10. Add 5 to it, then double it, each on its own line, using the variable’s current value. Print the final score. It should be 30.</p>",
+     starter:`score = 10\n`,
+     hints:["To add: <code>score = score + 5</code>","Doubling means multiplying by 2."],
+     solution:`score = 10\nscore = score + 5\nscore = score * 2\nprint(score)`,
+     tests:`assert score == 30, "score should end at 30: 10 plus 5, then doubled"`, expect:"30",
+     must:[[/score\s*=\s*score\s*\+/, "Add to score using its own value, like score = score + 5."],[/score\s*=\s*score\s*\*/, "Double score using its own value, like score = score * 2."]]},
+    {id:"v4", tier:"core", title:"Movie length",
+     prompt:"<p>A movie is <code>hours = 2</code> and <code>minutes = 15</code> long. Create <code>total_minutes</code> that calculates the full length in minutes from those two variables, and print it.</p>",
+     starter:`hours = 2\nminutes = 15\n`,
+     hints:["One hour has 60 minutes.","Multiply <code>hours</code> by 60, then add <code>minutes</code>."],
+     solution:`hours = 2\nminutes = 15\ntotal_minutes = hours * 60 + minutes\nprint(total_minutes)`,
+     tests:`assert total_minutes == 135, "total_minutes should be 135"`, expect:"135",
+     must:[[/total_minutes\s*=.*hours/, "Calculate from the hours and minutes variables instead of typing 135."]]},
+    {id:"v5", tier:"challenge", title:"Rotate three",
+     prompt:"<p>Start with <code>a = 1</code>, <code>b = 2</code>, <code>c = 3</code>. Rotate them so <code>a</code> gets b’s value, <code>b</code> gets c’s value, and <code>c</code> gets a’s original value. Only move values between variables; don’t type 1, 2 or 3 again.</p>",
+     starter:`a = 1\nb = 2\nc = 3\n\n# Rotate here\n\nprint(a, b, c)  # should show 2 3 1\n`,
+     hints:["If you write <code>a = b</code> first, a’s original value is gone. Save it somewhere first.","Try <code>temp = a</code>, then shift the others along.","Python can also rotate in one line using multiple assignment."],
+     solution:`a = 1\nb = 2\nc = 3\ntemp = a\na = b\nb = c\nc = temp\nprint(a, b, c)`,
+     tests:`assert (a, b, c) == (2, 3, 1), "After rotating, a, b and c should be 2, 3 and 1"`,
+     mustNot:[[/^\s*[abc]\s*=\s*[0-9]+\s*$(?![\s\S]*^\s*[abc]\s*=\s*[0-9]+\s*$)/m, null]],
+     custom:"rotate"}
+  ]
+},
+{
+  id:"types", title:"Variable types", summary:"Every value has a type. The type decides what you can do with it.",
+  sections:[
+    {h:"Four everyday types", p:"<code>int</code> is a whole number, <code>float</code> is a number with a decimal point, <code>str</code> (string) is text, and <code>bool</code> is True or False. <code>type()</code> tells you which one you have.", code:
+`age = 15            # int
+height = 1.68       # float
+city = "Lagos"      # str
+likes_pizza = True  # bool
+print(type(age))
+print(type(height))
+print(type(city))
+print(type(likes_pizza))`},
+    {h:"Types change what operators do", p:"<code>+</code> adds numbers but joins strings. <code>*</code> multiplies numbers but repeats strings.", code:
+`print(3 + 4)
+print("3" + "4")
+print("ha" * 3)`},
+    {h:"Converting between types", p:"<code>int()</code>, <code>float()</code> and <code>str()</code> turn a value into that type. This matters when a number is stored as text.", code:
+`text = "20"
+number = int(text)
+print(number + 5)
+print("I have " + str(number) + " coins")`},
+    {h:"Two kinds of division", p:"<code>/</code> always gives a float. <code>//</code> gives only the whole-number part, and <code>%</code> gives the remainder.", code:
+`print(7 / 2)
+print(7 // 2)
+print(7 % 2)`}
+  ],
+  tip:"Not sure what type something is? <code>print(type(x))</code> will tell you. Quotes are the giveaway: <code>\"5\"</code> is text, <code>5</code> is a number.",
+  mistake:"Joining text and a number with <code>+</code>, like <code>\"Age: \" + 15</code>. Python won’t guess what you meant. Convert first with <code>str(15)</code>, or use commas inside print.",
+  deeper:"Floats are stored in binary, so <code>0.1 + 0.2</code> prints 0.30000000000000004. Use <code>round(x, 2)</code> when showing money. Fun fact: bool is a kind of int, so <code>True + True</code> is 2.",
+  exercises:[
+    {id:"t1", tier:"starter", title:"Profile card",
+     prompt:"<p>Fill in each variable with the right type: <code>age</code> as an int, <code>height</code> as a float, <code>city</code> as a str, and <code>is_student</code> as a bool.</p>",
+     starter:`age = \nheight = \ncity = \nis_student = \n`,
+     hints:["Whole numbers have no decimal point. Floats do, like <code>1.5</code>.","Booleans are written <code>True</code> or <code>False</code>: capital first letter, no quotes."],
+     solution:`age = 14\nheight = 1.6\ncity = "Toronto"\nis_student = True`,
+     tests:`assert type(age) == int, "age should be a whole number (int)"\nassert type(height) == float, "height should be a decimal number (float), like 1.6"\nassert type(city) == str, "city should be text in quotes (str)"\nassert type(is_student) == bool, "is_student should be True or False (bool)"`},
+    {id:"t2", tier:"starter", title:"Fix the birthday message",
+     prompt:"<p>This code crashes. Run it, read the error, then fix it so it prints <code>I am 12 years old</code>.</p>",
+     starter:`age = 12\nprint("I am " + age + " years old")\n`,
+     hints:["The error says Python can’t join text and a number with <code>+</code>.","Wrap <code>age</code> in <code>str()</code> so it becomes text before joining."],
+     solution:`age = 12\nprint("I am " + str(age) + " years old")`,
+     expect:"I am 12 years old",
+     must:[[/str\s*\(\s*age\s*\)|,\s*age\s*,/, "Use the age variable, converted with str(age), rather than retyping 12."]]},
+    {id:"t3", tier:"core", title:"Text to number",
+     prompt:"<p><code>number_text = \"42\"</code> holds a number as text. Create <code>result</code> that converts it to an int and adds 8.</p>",
+     starter:`number_text = "42"\n`,
+     hints:["<code>int(\"42\")</code> gives the number 42.","Do the conversion and the adding in one line, saved into result."],
+     solution:`number_text = "42"\nresult = int(number_text) + 8\nprint(result)`,
+     tests:`assert type(result) == int, "result should be an int, not text"\nassert result == 50, "result should be 50"`,
+     must:[[/int\s*\(\s*number_text/, "Convert number_text with int() instead of typing 42."]]},
+    {id:"t4", tier:"core", title:"Shopping total",
+     prompt:"<p><code>price = \"19.99\"</code> is text and <code>quantity = 3</code>. Create <code>total</code>: a float equal to price times quantity, rounded to 2 decimal places.</p>",
+     starter:`price = "19.99"\nquantity = 3\n`,
+     hints:["Text that looks like a decimal converts with <code>float()</code>.","<code>round(value, 2)</code> rounds to 2 decimal places."],
+     solution:`price = "19.99"\nquantity = 3\ntotal = round(float(price) * quantity, 2)\nprint(total)`,
+     tests:`assert type(total) == float, "total should be a float"\nassert abs(total - 59.97) < 0.001, "total should be 59.97"`},
+    {id:"t5", tier:"challenge", title:"Hours and minutes",
+     prompt:"<p><code>total_minutes = 135</code>. Using <code>//</code> and <code>%</code>, create <code>hours</code> and <code>minutes</code>. Then print exactly <code>2 hours and 15 minutes</code>, built from your variables.</p>",
+     starter:`total_minutes = 135\n`,
+     hints:["<code>135 // 60</code> tells you how many full hours fit.","<code>135 % 60</code> is what’s left over.","Join it with <code>str()</code> and <code>+</code>, or with commas inside print."],
+     solution:`total_minutes = 135\nhours = total_minutes // 60\nminutes = total_minutes % 60\nprint(str(hours) + " hours and " + str(minutes) + " minutes")`,
+     tests:`assert hours == 2, "hours should be 2"\nassert minutes == 15, "minutes should be 15"`,
+     expect:"2 hours and 15 minutes",
+     must:[[/\/\//, "Use // to find the whole hours."],[/%/, "Use % to find the leftover minutes."]]}
+  ]
+},
+{
+  id:"strings", title:"Strings and methods", summary:"Slice, search and reshape text with indexing and built-in string methods.",
+  sections:[
+    {h:"Strings are sequences", p:"Each character has a position, called an index, starting at 0. Negative indexes count back from the end.", code:
+`word = "python"
+print(word[0])
+print(word[-1])
+print(len(word))`},
+    {h:"Slicing", p:"<code>word[start:end]</code> takes a piece. The start is included; the end isn’t. Leave one out to go all the way to that edge.", code:
+`word = "python"
+print(word[0:3])
+print(word[2:])
+print(word[::-1])`},
+    {h:"String methods", p:"Methods are actions attached to a value, called with a dot. They give back a new string; the original stays the same.", code:
+`msg = "  hello, world  "
+print(msg.upper())
+print(msg.strip())
+print(msg.strip().title())
+print(msg.replace("world", "Python"))`},
+    {h:"Searching inside strings", p:"<code>.count()</code> counts matches, <code>.find()</code> gives the index of the first match (or -1), and <code>in</code> asks whether one string is inside another.", code:
+`s = "banana"
+print(s.count("a"))
+print(s.find("n"))
+print("nan" in s)
+print(s.startswith("ba"))`}
+  ],
+  tip:"Counting starts at 0. In <code>\"python\"</code>, p is at index 0 and n is at index 5. <code>len(\"python\")</code> is 6, one more than the last index.",
+  mistake:"Expecting a method to change the original. <code>name.upper()</code> on its own line does nothing you can see. Save the result: <code>name = name.upper()</code>.",
+  deeper:"Methods chain left to right: <code>text.strip().lower().replace(\" \", \"_\")</code>. Each one works on the result of the one before. Strings are immutable, which is why methods always return a new string.",
+  exercises:[
+    {id:"s1", tier:"starter", title:"Make it loud",
+     prompt:"<p>Print <code>word</code> in all capital letters using a string method.</p>",
+     starter:`word = "python"\n`,
+     hints:["There’s a method that turns letters into capitals. Its name is the opposite of lower.","<code>print(word.upper())</code>"],
+     solution:`word = "python"\nprint(word.upper())`,
+     expect:"PYTHON", must:[[/\.upper\s*\(/, "Use the .upper() method."]]},
+    {id:"s2", tier:"starter", title:"First letter",
+     prompt:"<p>Create <code>first</code> that holds the first character of <code>name</code>, then print it.</p>",
+     starter:`name = "Ada Lovelace"\nfirst = \nprint(first)\n`,
+     hints:["Use square brackets after the variable name to pick a position.","The first position is 0, not 1."],
+     solution:`name = "Ada Lovelace"\nfirst = name[0]\nprint(first)`,
+     tests:`assert first == "A", "first should be the first character, A"`,
+     must:[[/name\s*\[/, "Use indexing, like name[...], to pick the character."]]},
+    {id:"s3", tier:"core", title:"Tidy up",
+     prompt:"<p>Create <code>clean</code> from <code>messy</code> so it has no extra spaces and each word starts with a capital: <code>Hello World</code>.</p>",
+     starter:`messy = "   hello world   "\n`,
+     hints:["<code>.strip()</code> removes spaces from both ends.","<code>.title()</code> capitalizes the first letter of each word. You can chain the two."],
+     solution:`messy = "   hello world   "\nclean = messy.strip().title()\nprint(clean)`,
+     tests:`assert clean == "Hello World", "clean should be exactly Hello World"`,
+     must:[[/messy\s*\./, "Build clean from messy using methods."]]},
+    {id:"s4", tier:"core", title:"Count the a’s",
+     prompt:"<p>Create <code>count_a</code> that holds how many times the letter a appears in <code>sentence</code>. Let Python do the counting.</p>",
+     starter:`sentence = "banana bandana"\n`,
+     hints:["One string method counts how often something appears.","<code>sentence.count(\"a\")</code>"],
+     solution:`sentence = "banana bandana"\ncount_a = sentence.count("a")\nprint(count_a)`,
+     tests:`assert count_a == 6, "There are 6 a’s in banana bandana"`,
+     must:[[/sentence/, "Count from the sentence variable instead of typing the number."]]},
+    {id:"s5", tier:"challenge", title:"Split an email",
+     prompt:"<p>Create <code>username</code> (everything before the @) and <code>domain</code> (everything after it). Your code should still work if the email changes, so find the @ with code instead of counting by hand.</p>",
+     starter:`email = "ada.lovelace@school.org"\n`,
+     hints:["<code>email.find(\"@\")</code> gives the position of the @.","Slice up to that position for the username.","For the domain, start one position after the @."],
+     solution:`email = "ada.lovelace@school.org"\nat = email.find("@")\nusername = email[:at]\ndomain = email[at + 1:]\nprint(username)\nprint(domain)`,
+     tests:`assert username == "ada.lovelace", "username should be ada.lovelace"\nassert domain == "school.org", "domain should be school.org"`,
+     must:[[/find|index|split/, "Locate the @ with .find() rather than counting characters yourself."]]}
+  ]
+},
+{
+  id:"bools", title:"Boolean expressions", summary:"Ask Python yes-or-no questions and combine them with and, or and not.",
+  sections:[
+    {h:"True or False", p:"A boolean expression is a question Python answers with <code>True</code> or <code>False</code>.", code:
+`print(5 > 3)
+print(5 < 3)
+print(10 == 10)
+print("cat" != "dog")`},
+    {h:"Comparison operators", p:"<code>==</code> equal, <code>!=</code> not equal, <code>&lt;</code> less than, <code>&gt;</code> greater than, <code>&lt;=</code> and <code>&gt;=</code> include the boundary.", code:
+`age = 16
+print(age >= 18)
+print(age == 16)
+print(age < 13)`},
+    {h:"and, or, not", p:"<code>and</code> is True only if both sides are. <code>or</code> is True if at least one side is. <code>not</code> flips a value.", code:
+`is_sunny = True
+is_weekend = False
+print(is_sunny and is_weekend)
+print(is_sunny or is_weekend)
+print(not is_weekend)`},
+    {h:"Storing the answer", p:"Save a boolean in a well-named variable and long conditions become easy to read.", code:
+`temperature = 22
+is_comfortable = temperature >= 18 and temperature <= 26
+print(is_comfortable)`}
+  ],
+  tip:"Say it in English first. “Is the age at least 18?” becomes <code>age >= 18</code>. “Sunny and the weekend” becomes <code>is_sunny and is_weekend</code>.",
+  mistake:"Using <code>=</code> when you mean <code>==</code>. One equals sign stores a value; two equals signs ask a question.",
+  deeper:"Python allows chained comparisons: <code>18 &lt;= temperature &lt;= 26</code>. Also, <code>and</code> and <code>or</code> stop early. In <code>False and anything</code>, Python never looks at the right side. This is called short-circuiting.",
+  exercises:[
+    {id:"b1", tier:"starter", title:"Big number?",
+     prompt:"<p>Set <code>is_big</code> to a comparison that is True when <code>x</code> is greater than 5. Don’t type True directly; let Python work it out.</p>",
+     starter:`x = 7\nis_big = \nprint(is_big)\n`,
+     hints:["Greater than is <code>&gt;</code>.","<code>is_big = x &gt; 5</code>"],
+     solution:`x = 7\nis_big = x > 5\nprint(is_big)`,
+     tests:`assert is_big == True, "With x = 7, is_big should be True"`,
+     must:[[/is_big\s*=\s*x\s*>/, "Compare x to 5 with > rather than typing True."]]},
+    {id:"b2", tier:"starter", title:"Voting age",
+     prompt:"<p>Set <code>can_vote</code> to a comparison that is True when <code>age</code> is 18 or older.</p>",
+     starter:`age = 16\ncan_vote = \nprint(can_vote)\n`,
+     hints:["“18 or older” includes 18 itself.","Use <code>&gt;=</code>."],
+     solution:`age = 16\ncan_vote = age >= 18\nprint(can_vote)`,
+     tests:`assert can_vote == False, "With age = 16, can_vote should be False"`,
+     must:[[/age\s*>=\s*18/, "Use age >= 18 so that 18 counts as old enough."]]},
+    {id:"b3", tier:"core", title:"Nice weather",
+     prompt:"<p>Create <code>is_nice</code>: True when <code>temperature</code> is between 18 and 26, including both.</p>",
+     starter:`temperature = 22\n`,
+     hints:["You need two comparisons that must both be True.","Join them with <code>and</code>."],
+     solution:`temperature = 22\nis_nice = temperature >= 18 and temperature <= 26\nprint(is_nice)`,
+     tests:`assert is_nice == True, "With temperature = 22, is_nice should be True"`,
+     must:[[/temperature\s*>=?\s*18|18\s*<=?\s*temperature/, "Compare temperature to 18 and to 26."]]},
+    {id:"b4", tier:"core", title:"At the door",
+     prompt:"<p>A guest can enter if they have a ticket or are a VIP, and they are not banned. Create <code>can_enter</code> from the three variables.</p>",
+     starter:`has_ticket = False\nis_vip = True\nis_banned = False\n`,
+     hints:["Group the first part in parentheses: <code>(has_ticket or is_vip)</code>.","Then add <code>and not is_banned</code>."],
+     solution:`has_ticket = False\nis_vip = True\nis_banned = False\ncan_enter = (has_ticket or is_vip) and not is_banned\nprint(can_enter)`,
+     tests:`assert can_enter == True, "A VIP who is not banned should be able to enter"`,
+     must:[[/\bor\b/, "Use or for “ticket or VIP.”"],[/\bnot\b/, "Use not for “not banned.”"]]},
+    {id:"b5", tier:"challenge", title:"Leap year",
+     prompt:"<p>A year is a leap year if it’s divisible by 4, except years divisible by 100, unless they’re also divisible by 400. Create <code>is_leap</code> for <code>year</code> as one boolean expression.</p>",
+     starter:`year = 2024\n`,
+     hints:["“Divisible by 4” means <code>year % 4 == 0</code>.","Two ways to be a leap year: (divisible by 4 and not by 100) or divisible by 400.","<code>(year % 4 == 0 and year % 100 != 0) or year % 400 == 0</code>"],
+     solution:`year = 2024\nis_leap = (year % 4 == 0 and year % 100 != 0) or year % 400 == 0\nprint(is_leap)`,
+     tests:`assert is_leap == True, "2024 is a leap year"`,
+     must:[[/%\s*4/, "Check divisibility by 4 with %."],[/%\s*100/, "Handle the divisible-by-100 exception."],[/%\s*400/, "Handle the divisible-by-400 rule."]]}
+  ]
+},
+{
+  id:"ifs", title:"Conditional statements", summary:"Make your program choose what to do with if, elif and else.",
+  sections:[
+    {h:"if", p:"An <code>if</code> runs its indented block only when the condition is True. The line ends with a colon, and the block is indented 4 spaces.", code:
+`temperature = 31
+if temperature > 30:
+    print("It is hot today!")
+print("This line always runs.")`},
+    {h:"else", p:"<code>else</code> catches every case the <code>if</code> didn’t.", code:
+`age = 14
+if age >= 13:
+    print("You can join the club.")
+else:
+    print("Come back when you are 13.")`},
+    {h:"elif for more choices", p:"Python checks from top to bottom and runs only the first branch that’s True.", code:
+`score = 82
+if score >= 90:
+    print("A")
+elif score >= 80:
+    print("B")
+elif score >= 70:
+    print("C")
+else:
+    print("Keep practicing")`},
+    {h:"Nesting", p:"An if can sit inside another if. Each level adds another 4 spaces of indentation.", code:
+`has_ticket = True
+age = 10
+if has_ticket:
+    if age < 12:
+        print("Child ticket")
+    else:
+        print("Adult ticket")
+else:
+    print("Please buy a ticket")`}
+  ],
+  tip:"Every <code>if</code>, <code>elif</code> and <code>else</code> line ends with a colon, and the lines that belong to it are indented. The editor indents for you after you type a colon and press Enter.",
+  mistake:"Putting conditions in the wrong order. If <code>score >= 70</code> comes first, a score of 95 gets a C, because Python stops at the first True branch.",
+  deeper:"Python has a one-line form called a conditional expression: <code>label = \"even\" if n % 2 == 0 else \"odd\"</code>. It’s great for simple choices; use full if statements for anything longer.",
+  exercises:[
+    {id:"i1", tier:"starter", title:"Hot or not",
+     prompt:"<p>Print <code>Hot!</code> if <code>temperature</code> is above 30. Otherwise print <code>Nice.</code></p>",
+     starter:`temperature = 35\nif temperature > 30:\n    \nelse:\n    \n`,
+     hints:["Each empty indented line needs a print.","The first print shows <code>\"Hot!\"</code>; the one under else shows <code>\"Nice.\"</code>"],
+     solution:`temperature = 35\nif temperature > 30:\n    print("Hot!")\nelse:\n    print("Nice.")`,
+     expect:"Hot!", must:[[/\bif\b/, "Use an if statement."],[/\belse\s*:/, "Include an else for the other case."]]},
+    {id:"i2", tier:"starter", title:"Fix the indentation",
+     prompt:"<p>This password check crashes. Fix the spacing so it prints <code>Welcome in!</code></p>",
+     starter:`password = "sunflower"\nif password == "sunflower":\nprint("Welcome in!")\nelse:\nprint("Wrong password.")\n`,
+     hints:["Lines that belong to an if or else must be indented.","Add 4 spaces before each print line."],
+     solution:`password = "sunflower"\nif password == "sunflower":\n    print("Welcome in!")\nelse:\n    print("Wrong password.")`,
+     expect:"Welcome in!"},
+    {id:"i3", tier:"core", title:"Even or odd",
+     prompt:"<p>Print <code>even</code> if <code>number</code> is even, or <code>odd</code> if it isn’t.</p>",
+     starter:`number = 14\n`,
+     hints:["An even number has no remainder when divided by 2.","<code>number % 2 == 0</code> is True for even numbers."],
+     solution:`number = 14\nif number % 2 == 0:\n    print("even")\nelse:\n    print("odd")`,
+     expect:"even", must:[[/%\s*2/, "Use % 2 to test for even numbers."],[/\bif\b/, "Use an if statement."]]},
+    {id:"i4", tier:"core", title:"Letter grade",
+     prompt:"<p>Print the letter grade for <code>score</code>: A for 90 and up, B for 80 and up, C for 70 and up, otherwise F.</p>",
+     starter:`score = 85\n`,
+     hints:["Start with the highest grade and work down.","Use <code>if</code>, then <code>elif</code> twice, then <code>else</code>."],
+     solution:`score = 85\nif score >= 90:\n    print("A")\nelif score >= 80:\n    print("B")\nelif score >= 70:\n    print("C")\nelse:\n    print("F")`,
+     expect:"B", must:[[/\belif\b/, "Use elif for the middle grades."]]},
+    {id:"i5", tier:"challenge", title:"FizzBuzz, one number",
+     prompt:"<p>For <code>n</code>: print <code>FizzBuzz</code> if it’s divisible by both 3 and 5, <code>Fizz</code> if only by 3, <code>Buzz</code> if only by 5, otherwise print the number.</p>",
+     starter:`n = 15\n`,
+     hints:["Order matters. Which check must come first?","Check divisible by both before checking 3 or 5 alone.","<code>n % 3 == 0 and n % 5 == 0</code>"],
+     solution:`n = 15\nif n % 3 == 0 and n % 5 == 0:\n    print("FizzBuzz")\nelif n % 3 == 0:\n    print("Fizz")\nelif n % 5 == 0:\n    print("Buzz")\nelse:\n    print(n)`,
+     expect:"FizzBuzz", must:[[/%\s*3/, "Test divisibility by 3 with %."],[/%\s*5/, "Test divisibility by 5 with %."],[/\belif\b/, "Use elif for the other cases."]]}
+  ]
+},
+{
+  id:"lists", title:"Lists", summary:"Keep many values in order in a single variable, then add, remove and look them up.",
+  sections:[
+    {h:"Making a list", p:"Square brackets, items separated by commas. Indexing works just like strings.", code:
+`colors = ["red", "green", "blue"]
+print(colors)
+print(colors[0])
+print(colors[-1])
+print(len(colors))`},
+    {h:"Changing a list", p:"Unlike strings, lists can be changed in place.", code:
+`pets = ["cat", "dog"]
+pets.append("fish")
+pets.insert(0, "hamster")
+pets.remove("dog")
+pets[0] = "rabbit"
+print(pets)`},
+    {h:"Taking items out", p:"<code>.pop()</code> removes the last item and gives it back to you.", code:
+`stack = [10, 20, 30]
+last = stack.pop()
+print(last)
+print(stack)`},
+    {h:"Useful tools", p:"<code>max</code>, <code>min</code>, <code>sum</code> and <code>sorted</code> work on lists of numbers. <code>.split()</code> turns a sentence into a list of words.", code:
+`scores = [88, 92, 75]
+print(max(scores), min(scores), sum(scores))
+print(sorted(scores))
+print(92 in scores)
+words = "red green blue".split()
+print(words)`}
+  ],
+  tip:"Lists use square brackets and commas. The first item is <code>my_list[0]</code>, and the last is <code>my_list[-1]</code>.",
+  mistake:"Writing <code>items = items.append(x)</code>. append changes the list itself and gives back None, so you’d lose your list. Just write <code>items.append(x)</code>.",
+  deeper:"<code>sorted(items)</code> makes a new sorted list and leaves the original alone; <code>items.sort()</code> reorders the original. Lists can hold other lists: <code>grid[1][2]</code> reaches row 1, column 2.",
+  exercises:[
+    {id:"l1", tier:"starter", title:"Three colors",
+     prompt:"<p>Create a list called <code>colors</code> with at least three color names, then print the first one.</p>",
+     starter:`colors = [ ]\n`,
+     hints:["Each color is text, so put it in quotes. Separate them with commas.","The first item is at index 0: <code>colors[0]</code>"],
+     solution:`colors = ["red", "green", "blue"]\nprint(colors[0])`,
+     tests:`assert type(colors) == list, "colors should be a list"\nassert len(colors) >= 3, "colors needs at least three items"`,
+     must:[[/colors\s*\[\s*0\s*\]/, "Print the first item with colors[0]."]]},
+    {id:"l2", tier:"starter", title:"Shopping list",
+     prompt:"<p>Add <code>\"bread\"</code> to the end of <code>shopping</code>, then print the list.</p>",
+     starter:`shopping = ["milk", "eggs"]\n\nprint(shopping)\n`,
+     hints:["There’s a list method that adds to the end.","<code>shopping.append(\"bread\")</code>"],
+     solution:`shopping = ["milk", "eggs"]\nshopping.append("bread")\nprint(shopping)`,
+     tests:`assert shopping == ["milk", "eggs", "bread"], "shopping should be milk, eggs, bread in that order"`,
+     must:[[/\.append\s*\(/, "Use .append() to add to the list."]]},
+    {id:"l3", tier:"core", title:"Score report",
+     prompt:"<p>Create <code>highest</code>, <code>lowest</code> and <code>average</code> from <code>scores</code> using built-in tools, so they’d still be right if the scores changed.</p>",
+     starter:`scores = [88, 92, 75, 64, 99]\n`,
+     hints:["<code>max()</code> and <code>min()</code> handle the first two.","Average is the total divided by how many there are: <code>sum()</code> and <code>len()</code>."],
+     solution:`scores = [88, 92, 75, 64, 99]\nhighest = max(scores)\nlowest = min(scores)\naverage = sum(scores) / len(scores)\nprint(highest, lowest, average)`,
+     tests:`assert highest == 99, "highest should be 99"\nassert lowest == 64, "lowest should be 64"\nassert abs(average - 83.6) < 0.001, "average should be 83.6"`,
+     must:[[/max\s*\(/, "Use max()."],[/min\s*\(/, "Use min()."],[/sum\s*\(/, "Use sum() for the total."]]},
+    {id:"l4", tier:"core", title:"Is there a dog?",
+     prompt:"<p>Print <code>We have a dog!</code> if \"dog\" is in <code>pets</code>, otherwise <code>No dog here.</code></p>",
+     starter:`pets = ["cat", "dog", "fish"]\n`,
+     hints:["<code>\"dog\" in pets</code> is True or False.","Put that check in an if statement."],
+     solution:`pets = ["cat", "dog", "fish"]\nif "dog" in pets:\n    print("We have a dog!")\nelse:\n    print("No dog here.")`,
+     expect:"We have a dog!", must:[[/in\s+pets/, "Use the in operator to check the list."]]},
+    {id:"l5", tier:"challenge", title:"Find the median",
+     prompt:"<p>Create <code>sorted_nums</code>, a sorted copy of <code>nums</code> (leave <code>nums</code> unchanged), and <code>median</code>, the middle value of the sorted copy. Use <code>len()</code> so it works for any odd-length list.</p>",
+     starter:`nums = [3, 8, 1, 9, 5]\n`,
+     hints:["<code>sorted(nums)</code> makes a new list; <code>nums.sort()</code> changes the original.","The middle index of a 5-item list is 2. How do you get 2 from <code>len(nums)</code>?","<code>len(sorted_nums) // 2</code>"],
+     solution:`nums = [3, 8, 1, 9, 5]\nsorted_nums = sorted(nums)\nmedian = sorted_nums[len(sorted_nums) // 2]\nprint(sorted_nums, median)`,
+     tests:`assert nums == [3, 8, 1, 9, 5], "nums should not be changed. Make a sorted copy instead"\nassert sorted_nums == [1, 3, 5, 8, 9], "sorted_nums should be [1, 3, 5, 8, 9]"\nassert median == 5, "median should be 5"`,
+     must:[[/len\s*\(/, "Use len() to find the middle position."]]}
+  ]
+},
+{
+  id:"loops", title:"For loops", summary:"Repeat code for every item in a list, every letter in a string, or every number in a range.",
+  sections:[
+    {h:"Looping over a list", p:"The indented block runs once per item, with the loop variable holding the current item.", code:
+`fruits = ["apple", "mango", "kiwi"]
+for fruit in fruits:
+    print("I like", fruit)`},
+    {h:"Counting with range()", p:"<code>range(5)</code> gives 0 to 4. <code>range(1, 6)</code> gives 1 to 5. A third number sets the step.", code:
+`for i in range(5):
+    print(i)
+for i in range(10, 0, -3):
+    print(i)`},
+    {h:"The accumulator pattern", p:"Create a variable before the loop and update it inside. This is how you total, count and collect.", code:
+`numbers = [4, 8, 15]
+total = 0
+for n in numbers:
+    total = total + n
+print(total)`},
+    {h:"Looping over a string", p:"A string is a sequence too, so you can loop over its letters.", code:
+`count = 0
+for letter in "mississippi":
+    if letter == "s":
+        count = count + 1
+print(count)`}
+  ],
+  tip:"The loop variable (<code>fruit</code>, <code>i</code>, <code>letter</code>) is a name you choose. Each time around, Python puts the next item into it.",
+  mistake:"Resetting the accumulator inside the loop. If <code>total = 0</code> is indented under the for, it starts over every time.",
+  deeper:"<code>enumerate(items)</code> gives you the index and the item together: <code>for i, item in enumerate(items):</code>. And you can build a list in one line with a list comprehension: <code>[n * n for n in range(5)]</code>.",
+  exercises:[
+    {id:"f1", tier:"starter", title:"Count to five",
+     prompt:"<p>Use a for loop with <code>range()</code> to print the numbers 1 to 5, one per line.</p>",
+     starter:`for i in range( ):\n    print(i)\n`,
+     hints:["range stops just before its second number.","<code>range(1, 6)</code>"],
+     solution:`for i in range(1, 6):\n    print(i)`,
+     expect:"1\n2\n3\n4\n5", must:[[/\bfor\b/, "Use a for loop."],[/range\s*\(/, "Use range()."]]},
+    {id:"f2", tier:"starter", title:"Fruit fan",
+     prompt:"<p>Loop over <code>fruits</code> and print <code>I like</code> followed by each fruit.</p>",
+     starter:`fruits = ["apple", "mango", "kiwi"]\nfor fruit in fruits:\n    \n`,
+     hints:["Inside the loop, print uses the loop variable.","<code>print(\"I like\", fruit)</code>"],
+     solution:`fruits = ["apple", "mango", "kiwi"]\nfor fruit in fruits:\n    print("I like", fruit)`,
+     expect:"I like apple\nI like mango\nI like kiwi", must:[[/\bfor\b/, "Use a for loop."]]},
+    {id:"f3", tier:"core", title:"Add up to 100",
+     prompt:"<p>Use a loop to add every number from 1 to 100. Store the answer in <code>total</code> and print it.</p>",
+     starter:``,
+     hints:["Start with <code>total = 0</code> before the loop.","<code>range(1, 101)</code> includes 100.","Inside the loop: <code>total = total + i</code>"],
+     solution:`total = 0\nfor i in range(1, 101):\n    total = total + i\nprint(total)`,
+     tests:`assert total == 5050, "total should be 5050"`, expect:"5050",
+     must:[[/\bfor\b/, "Use a for loop to do the adding."]]},
+    {id:"f4", tier:"core", title:"Vowel counter",
+     prompt:"<p>Loop over <code>word</code> and count how many letters are vowels (a, e, i, o, u). Store it in <code>vowels</code>.</p>",
+     starter:`word = "education"\n`,
+     hints:["Start <code>vowels = 0</code> before the loop.","<code>letter in \"aeiou\"</code> is True for vowels."],
+     solution:`word = "education"\nvowels = 0\nfor letter in word:\n    if letter in "aeiou":\n        vowels = vowels + 1\nprint(vowels)`,
+     tests:`assert vowels == 5, "education has 5 vowels"`,
+     must:[[/\bfor\b/, "Use a for loop over the word."]]},
+    {id:"f5", tier:"challenge", title:"FizzBuzz, 1 to 15",
+     prompt:"<p>For every number from 1 to 15, print <code>FizzBuzz</code> if it’s divisible by 3 and 5, <code>Fizz</code> if by 3, <code>Buzz</code> if by 5, otherwise the number itself.</p>",
+     starter:``,
+     hints:["You solved this for one number in the conditionals lesson. Now wrap it in a loop.","<code>for n in range(1, 16):</code> then put the if/elif/else inside, indented."],
+     solution:`for n in range(1, 16):\n    if n % 3 == 0 and n % 5 == 0:\n        print("FizzBuzz")\n    elif n % 3 == 0:\n        print("Fizz")\n    elif n % 5 == 0:\n        print("Buzz")\n    else:\n        print(n)`,
+     expect:"1\n2\nFizz\n4\nBuzz\nFizz\n7\n8\nFizz\nBuzz\n11\nFizz\n13\n14\nFizzBuzz",
+     must:[[/\bfor\b/, "Use a for loop."]]}
+  ]
+},
+{
+  id:"functions", title:"Functions", summary:"Package code under a name so you can run it whenever you need it.",
+  sections:[
+    {h:"Defining a function", p:"<code>def name():</code> starts a function, and its body is indented. Defining it doesn’t run it; calling it does.", code:
+`def say_hello():
+    print("Hello!")
+    print("Nice to meet you.")
+
+say_hello()
+say_hello()`},
+    {h:"Returning a value", p:"<code>return</code> sends a value back to wherever the function was called, so you can store it or use it.", code:
+`def get_secret_number():
+    return 42
+
+x = get_secret_number()
+print(x + 1)`},
+    {h:"print versus return", p:"<code>print</code> shows something on screen. <code>return</code> hands a value back. A function without return gives back <code>None</code>.", code:
+`def shows():
+    print(10)
+
+def gives():
+    return 10
+
+a = shows()
+b = gives()
+print("a is", a)
+print("b is", b)`},
+    {h:"Functions calling functions", p:"Small functions can be combined to build bigger ones.", code:
+`def line():
+    return "-" * 12
+
+def title_card():
+    print(line())
+    print("    MENU")
+    print(line())
+
+title_card()`}
+  ],
+  tip:"Think of a function as a recipe card. <code>def</code> writes the recipe down; calling it, like <code>say_hello()</code>, actually cooks it. Don’t forget the parentheses when you call.",
+  mistake:"Using print when the task needs return. print only shows a value; return gives it back so the rest of your program can use it.",
+  deeper:"Code after a return never runs, because the function ends there. Good functions do one job and are named with a verb: <code>get_total</code>, <code>draw_box</code>, <code>is_valid</code>.",
+  exercises:[
+    {id:"fn1", tier:"starter", title:"Say it twice",
+     prompt:"<p>Define a function <code>greet()</code> that prints <code>Hello!</code>. Then call it twice.</p>",
+     starter:`def greet():\n    \n\n# Call it twice below\n`,
+     hints:["Inside the function: <code>print(\"Hello!\")</code>","Calling looks like <code>greet()</code>, with no indentation."],
+     solution:`def greet():\n    print("Hello!")\n\ngreet()\ngreet()`,
+     expect:"Hello!\nHello!", must:[[/def\s+greet\s*\(/, "Define a function named greet."]]},
+    {id:"fn2", tier:"starter", title:"Return pi",
+     prompt:"<p>Finish <code>get_pi()</code> so it returns <code>3.14</code>.</p>",
+     starter:`def get_pi():\n    \n\nprint(get_pi())\n`,
+     hints:["Use the return keyword, not print.","<code>return 3.14</code>"],
+     solution:`def get_pi():\n    return 3.14\n\nprint(get_pi())`,
+     tests:`assert get_pi() == 3.14, "get_pi() should return 3.14"`,
+     must:[[/\breturn\b/, "Use return to hand back the value."]]},
+    {id:"fn3", tier:"core", title:"Return, don’t print",
+     prompt:"<p>Run this first: the message comes out as None. Change <code>get_greeting()</code> so it returns <code>Hi there</code> instead of printing it.</p>",
+     starter:`def get_greeting():\n    print("Hi there")\n\nmessage = get_greeting()\nprint("The message is:", message)\n`,
+     hints:["A function that only prints gives back None.","Swap print for return."],
+     solution:`def get_greeting():\n    return "Hi there"\n\nmessage = get_greeting()\nprint("The message is:", message)`,
+     tests:`assert get_greeting() == "Hi there", "get_greeting() should return the text Hi there"`},
+    {id:"fn4", tier:"core", title:"Print the menu",
+     prompt:"<p>Define <code>print_menu()</code>. Inside it, create <code>menu = [\"Pizza\", \"Salad\", \"Soup\"]</code> and use a loop to print each item with <code>- </code> in front. Then call it.</p>",
+     starter:``,
+     hints:["Everything inside the function is indented once; the loop body is indented twice.","<code>print(\"- \" + item)</code>"],
+     solution:`def print_menu():\n    menu = ["Pizza", "Salad", "Soup"]\n    for item in menu:\n        print("- " + item)\n\nprint_menu()`,
+     expect:"- Pizza\n- Salad\n- Soup",
+     must:[[/def\s+print_menu\s*\(/, "Define a function named print_menu."],[/\bfor\b/, "Use a for loop inside the function."]]},
+    {id:"fn5", tier:"challenge", title:"Star box",
+     prompt:"<p>Write <code>stars()</code> that returns <code>*****</code>, and <code>draw_box()</code> that uses a loop to print the result of <code>stars()</code> three times. Call <code>draw_box()</code>.</p>",
+     starter:``,
+     hints:["<code>\"*\" * 5</code> makes five stars.","In draw_box: <code>for i in range(3):</code> then <code>print(stars())</code>."],
+     solution:`def stars():\n    return "*" * 5\n\ndef draw_box():\n    for i in range(3):\n        print(stars())\n\ndraw_box()`,
+     tests:`assert stars() == "*****", "stars() should return five stars"`,
+     expect:"*****\n*****\n*****",
+     must:[[/def\s+draw_box/, "Define draw_box."],[/\bfor\b/, "Use a loop in draw_box."],[/print\s*\(\s*stars\s*\(\s*\)\s*\)/, "draw_box should print the result of stars()."]]}
+  ]
+},
+{
+  id:"params", title:"Parameters and return values", summary:"Give functions inputs so one function can handle many different cases.",
+  sections:[
+    {h:"Giving a function input", p:"Parameters are the names in the def line. Arguments are the values you pass in when you call it.", code:
+`def greet(name):
+    print("Hello, " + name + "!")
+
+greet("Maya")
+greet("Leo")`},
+    {h:"Several parameters", p:"Separate parameters with commas. Arguments fill them in order.", code:
+`def area(width, height):
+    return width * height
+
+print(area(3, 4))
+print(area(10, 2))`},
+    {h:"Default values", p:"A parameter can have a default, used when the caller leaves it out.", code:
+`def power(base, exponent=2):
+    return base ** exponent
+
+print(power(5))
+print(power(2, 10))`},
+    {h:"Keyword arguments", p:"Name the parameters when you call, and order stops mattering.", code:
+`def describe(animal, sound):
+    return "The " + animal + " says " + sound
+
+print(describe(sound="moo", animal="cow"))`},
+    {h:"Bringing it together", p:"Parameters, loops, conditionals and return working as one.", code:
+`def count_long_words(words, min_length):
+    count = 0
+    for w in words:
+        if len(w) >= min_length:
+            count = count + 1
+    return count
+
+print(count_long_words(["hi", "python", "loop", "variable"], 5))`}
+  ],
+  tip:"Parameters are like blanks on a form. The def line names the blanks, and each call fills them in. Your function should only use the blanks, never a fixed answer.",
+  mistake:"Ignoring the parameter. If your function says <code>return 9</code> instead of <code>return n * n</code>, it only works for one input. The checker tries several inputs to catch this.",
+  deeper:"Variables created inside a function are local: they disappear when it returns. That keeps functions from accidentally overwriting each other’s names. Data goes in through parameters and comes out through return.",
+  exercises:[
+    {id:"p1", tier:"starter", title:"Square it",
+     prompt:"<p>Finish <code>square(n)</code> so it returns <code>n</code> times itself. It must work for any number.</p>",
+     starter:`def square(n):\n    return \n\nprint(square(3))\n`,
+     hints:["Use the parameter <code>n</code>, not a specific number.","<code>return n * n</code>"],
+     solution:`def square(n):\n    return n * n\n\nprint(square(3))`,
+     tests:`assert square(3) == 9, "square(3) should be 9"\nassert square(0) == 0, "square(0) should be 0"\nassert square(-2) == 4, "square(-2) should be 4"\nassert square(10) == 100, "square(10) should be 100"`},
+    {id:"p2", tier:"starter", title:"Personal greeting",
+     prompt:"<p>Finish <code>greet(name)</code> so it returns <code>Hello, </code> plus the name plus <code>!</code>. For example, <code>greet(\"Maya\")</code> returns <code>Hello, Maya!</code></p>",
+     starter:`def greet(name):\n    return \n\nprint(greet("Maya"))\n`,
+     hints:["Join three pieces with +.","<code>\"Hello, \" + name + \"!\"</code>"],
+     solution:`def greet(name):\n    return "Hello, " + name + "!"\n\nprint(greet("Maya"))`,
+     tests:`assert greet("Maya") == "Hello, Maya!", "greet('Maya') should return Hello, Maya!"\nassert greet("Leo") == "Hello, Leo!", "greet('Leo') should return Hello, Leo!"`},
+    {id:"p3", tier:"core", title:"Even checker",
+     prompt:"<p>Write <code>is_even(n)</code> that returns True when <code>n</code> is even and False otherwise.</p>",
+     starter:``,
+     hints:["A boolean expression can be returned directly.","<code>return n % 2 == 0</code>"],
+     solution:`def is_even(n):\n    return n % 2 == 0\n\nprint(is_even(4))`,
+     tests:`assert is_even(4) == True, "is_even(4) should be True"\nassert is_even(7) == False, "is_even(7) should be False"\nassert is_even(0) == True, "is_even(0) should be True"\nassert is_even(-3) == False, "is_even(-3) should be False"`},
+    {id:"p4", tier:"core", title:"Grade function",
+     prompt:"<p>Write <code>letter_grade(score)</code> that returns \"A\" for 90 and up, \"B\" for 80 and up, \"C\" for 70 and up, and \"F\" below that.</p>",
+     starter:``,
+     hints:["This is your grade program from the conditionals lesson, with return instead of print.","Check the edges: 90 should be an A and 89 a B."],
+     solution:`def letter_grade(score):\n    if score >= 90:\n        return "A"\n    elif score >= 80:\n        return "B"\n    elif score >= 70:\n        return "C"\n    else:\n        return "F"\n\nprint(letter_grade(85))`,
+     tests:`assert letter_grade(95) == "A", "letter_grade(95) should be A"\nassert letter_grade(90) == "A", "letter_grade(90) should be A, because 90 counts"\nassert letter_grade(89) == "B", "letter_grade(89) should be B"\nassert letter_grade(70) == "C", "letter_grade(70) should be C"\nassert letter_grade(69) == "F", "letter_grade(69) should be F"\nassert letter_grade(0) == "F", "letter_grade(0) should be F"`},
+    {id:"p5", tier:"core", title:"Average of a list",
+     prompt:"<p>Write <code>average(numbers)</code> that returns the mean of a list. If the list is empty, return 0 instead of crashing.</p>",
+     starter:``,
+     hints:["Mean is <code>sum(numbers) / len(numbers)</code>.","An empty list has length 0. Check for that first with an if."],
+     solution:`def average(numbers):\n    if len(numbers) == 0:\n        return 0\n    return sum(numbers) / len(numbers)\n\nprint(average([2, 4, 9]))`,
+     tests:`assert average([2, 4, 9]) == 5, "average([2, 4, 9]) should be 5"\nassert average([10]) == 10, "average([10]) should be 10"\nassert abs(average([1, 2]) - 1.5) < 0.001, "average([1, 2]) should be 1.5"\nassert average([]) == 0, "average([]) should return 0"`},
+    {id:"p6", tier:"challenge", title:"Leap year, any year",
+     prompt:"<p>Write <code>is_leap(year)</code> that returns True for leap years. Remember the rule: divisible by 4, except by 100, unless by 400.</p>",
+     starter:``,
+     hints:["You built this expression in the boolean lesson. Now put it in a function.","Test your function with 1900 (not leap) and 2000 (leap) before checking."],
+     solution:`def is_leap(year):\n    return (year % 4 == 0 and year % 100 != 0) or year % 400 == 0\n\nprint(is_leap(2024))`,
+     tests:`assert is_leap(2024) == True, "2024 is a leap year"\nassert is_leap(2023) == False, "2023 is not a leap year"\nassert is_leap(1900) == False, "1900 is not a leap year: divisible by 100 but not 400"\nassert is_leap(2000) == True, "2000 is a leap year: divisible by 400"`},
+    {id:"p7", tier:"challenge", title:"Longest word",
+     prompt:"<p>Write <code>longest_word(sentence)</code> that returns the longest word. If two words tie, return the one that comes first.</p>",
+     starter:``,
+     hints:["<code>sentence.split()</code> gives you a list of words.","Keep track of the best word so far, and replace it only when you find a longer one.","Use <code>&gt;</code>, not <code>&gt;=</code>, so ties keep the first word."],
+     solution:`def longest_word(sentence):\n    best = ""\n    for word in sentence.split():\n        if len(word) > len(best):\n            best = word\n    return best\n\nprint(longest_word("the quick brown fox"))`,
+     tests:`assert longest_word("the quick brown fox") == "quick", "the quick brown fox: quick and brown tie, so quick comes first"\nassert longest_word("I love Python") == "Python", "I love Python should give Python"\nassert longest_word("a bb cc") == "bb", "a bb cc should give bb, the first of the tie"\nassert longest_word("hello") == "hello", "A single word should return itself"`}
+  ]
+}
+];
+
+/* ================= TOUGHER CHALLENGES ================= */
+// Challenge problems are also re-run with different starting values ("variants"),
+// so a solution only passes if it truly uses the variables instead of fixed answers.
+const MORE_CHALLENGES = {
+  vars:[
+    {id:"v6", tier:"challenge", title:"Swap with math",
+     prompt:"<p>Swap the values of <code>a</code> and <code>b</code> using only <code>+</code> and <code>-</code>. No helper variable, and no <code>a, b = b, a</code>.</p>",
+     starter:`a = 5\nb = 9\n\n# Swap using only + and -\n\nprint(a, b)  # should show 9 5\n`,
+     hints:["Start by storing the total in a: <code>a = a + b</code>. Now a holds both numbers combined.","If a is the total, the total minus b gives back the original a. Store that in b.","Last step: the total minus the new b gives the original b. Store that in a."],
+     solution:`a = 5\nb = 9\na = a + b\nb = a - b\na = a - b\nprint(a, b)`,
+     tests:`assert (a, b) == (9, 5), "After swapping, a should be 9 and b should be 5"`,
+     mustNot:[[/\b(temp|tmp)\b/, "No helper variable this time. Use + and - to do the swap."],[/^\s*a\s*,\s*b\s*=/m, "No multiple assignment this time. Use + and - to do the swap."]],
+     variants:[{set:{a:"2", b:"-7"}, tests:`assert (a, b) == (-7, 2), "a = 2, b = -7 should become a = -7, b = 2"`}]},
+    {id:"v7", tier:"challenge", title:"Marathon pace",
+     prompt:"<p>A runner finishes <code>distance_km</code> in <code>time_minutes</code>. Create <code>miles</code> (the distance in miles) and <code>pace</code> (minutes per mile, rounded to 2 decimals). Use only the variables, so your code works for any race.</p>",
+     starter:`distance_km = 42.195\ntime_minutes = 210\nkm_per_mile = 1.609344\n`,
+     hints:["To turn kilometers into miles, divide by the number of kilometers in a mile.","Pace is time divided by distance.","<code>pace = round(time_minutes / miles, 2)</code>"],
+     solution:`distance_km = 42.195\ntime_minutes = 210\nkm_per_mile = 1.609344\nmiles = distance_km / km_per_mile\npace = round(time_minutes / miles, 2)\nprint(miles, pace)`,
+     tests:`assert abs(miles - 26.2188) < 0.001, "miles should be about 26.22"\nassert pace == 8.01, "pace should be 8.01 minutes per mile"`,
+     must:[[/round\s*\(/, "Round pace to 2 decimals with round()."]],
+     variants:[{set:{distance_km:"10", time_minutes:"50"}, tests:`assert abs(pace - 8.05) < 0.001, "A 10 km race in 50 minutes should be a pace of 8.05"`}]}
+  ],
+  types:[
+    {id:"t6", tier:"challenge", title:"Digit sum",
+     prompt:"<p><code>n</code> is a four-digit number. Create <code>digit_sum</code>, the sum of its digits, using only <code>//</code> and <code>%</code>. Don’t turn n into text.</p>",
+     starter:`n = 4721\n`,
+     hints:["<code>n % 10</code> gives the last digit.","<code>n // 10</code> drops the last digit, so <code>n // 10 % 10</code> gives the tens digit.","Repeat the idea with 100 and 1000, then add the four digits."],
+     solution:`n = 4721\nones = n % 10\ntens = n // 10 % 10\nhundreds = n // 100 % 10\nthousands = n // 1000\ndigit_sum = ones + tens + hundreds + thousands\nprint(digit_sum)`,
+     tests:`assert digit_sum == 14, "4 + 7 + 2 + 1 is 14"`,
+     mustNot:[[/str\s*\(/, "Solve it with // and % only, without turning n into text."]],
+     variants:[{set:{n:"9999"}, tests:`assert digit_sum == 36, "For 9999 the digit sum should be 36"`},{set:{n:"1000"}, tests:`assert digit_sum == 1, "For 1000 the digit sum should be 1"`}]},
+    {id:"t7", tier:"challenge", title:"Receipt with tax",
+     prompt:"<p>Everything arrives as text except the tax rate. Print one receipt line in exactly this form: <code>Notebook x4 = 15.12</code>, where the total includes tax and is rounded to 2 decimals.</p>",
+     starter:`item = "Notebook"\nprice = "3.50"\nqty = "4"\ntax_rate = 0.08\n`,
+     hints:["Convert price with <code>float()</code> and qty with <code>int()</code> before multiplying.","Multiply by <code>(1 + tax_rate)</code> to add tax, then <code>round(..., 2)</code>.","qty is already text, so it can be joined directly: <code>item + \" x\" + qty</code>."],
+     solution:`item = "Notebook"\nprice = "3.50"\nqty = "4"\ntax_rate = 0.08\ntotal = round(float(price) * int(qty) * (1 + tax_rate), 2)\nprint(item + " x" + qty + " = " + str(total))`,
+     expect:"Notebook x4 = 15.12",
+     variants:[{set:{item:'"Pen"', price:'"1.25"', qty:'"10"'}, expect:"Pen x10 = 13.5"}]}
+  ],
+  strings:[
+    {id:"s6", tier:"challenge", title:"Initials",
+     prompt:"<p><code>full_name</code> has exactly three words. Create <code>initials</code> in the form <code>G.B.H.</code>: each first letter, capitalized, followed by a period.</p>",
+     starter:`full_name = "grace brewster hopper"\n`,
+     hints:["<code>full_name.find(\" \")</code> gives the position of the first space.","<code>.find()</code> can start searching later: <code>full_name.find(\" \", first_space + 1)</code> finds the second space.","Each initial is the character just after a space. Join them with periods, then use <code>.upper()</code>."],
+     solution:`full_name = "grace brewster hopper"\nfirst_space = full_name.find(" ")\nsecond_space = full_name.find(" ", first_space + 1)\ninitials = (full_name[0] + "." + full_name[first_space + 1] + "." + full_name[second_space + 1] + ".").upper()\nprint(initials)`,
+     tests:`assert initials == "G.B.H.", "initials should be G.B.H."`,
+     variants:[{set:{full_name:'"ada king lovelace"'}, tests:`assert initials == "A.K.L.", "For ada king lovelace, initials should be A.K.L."`}]},
+    {id:"s7", tier:"challenge", title:"Mask a card number",
+     prompt:"<p>Create <code>masked</code>: the card number with every digit replaced by <code>*</code> except the last four. It must work for card numbers of any length.</p>",
+     starter:`card = "4539148803436467"\n`,
+     hints:["How many stars do you need? Everything except the last 4 characters.","<code>\"*\" * 3</code> makes three stars.","<code>card[-4:]</code> is the last four characters."],
+     solution:`card = "4539148803436467"\nmasked = "*" * (len(card) - 4) + card[-4:]\nprint(masked)`,
+     tests:`assert masked == "************6467", "masked should be 12 stars followed by 6467"`,
+     must:[[/len\s*\(/, "Use len() so it works for any length."]],
+     variants:[{set:{card:'"12345678"'}, tests:`assert masked == "****5678", "For 12345678, masked should be ****5678"`}]}
+  ],
+  bools:[
+    {id:"b6", tier:"challenge", title:"Valid username",
+     prompt:"<p>A username is valid if it’s 5 to 15 characters long, starts with a letter, and has no spaces. Create <code>is_valid</code> as one boolean expression.</p>",
+     starter:`username = "code_wizard7"\n`,
+     hints:["Length between two numbers: <code>5 &lt;= len(username) &lt;= 15</code>","<code>username[0].isalpha()</code> is True when the first character is a letter.","For spaces, use <code>not in</code>, and join all three parts with <code>and</code>."],
+     solution:`username = "code_wizard7"\nis_valid = 5 <= len(username) <= 15 and username[0].isalpha() and " " not in username\nprint(is_valid)`,
+     tests:`assert is_valid == True, "code_wizard7 is a valid username"`,
+     variants:[
+       {set:{username:'"7wizard"'}, tests:`assert is_valid == False, "7wizard starts with a digit, so it is not valid"`},
+       {set:{username:'"ab"'}, tests:`assert is_valid == False, "ab is too short"`},
+       {set:{username:'"code wizard"'}, tests:`assert is_valid == False, "code wizard has a space"`},
+       {set:{username:'"a_very_long_username_here"'}, tests:`assert is_valid == False, "That name is longer than 15 characters"`}]},
+    {id:"b7", tier:"challenge", title:"Triangle checker",
+     prompt:"<p>Three side lengths make a triangle only if each pair of sides adds up to more than the third. Create <code>is_triangle</code>. Then create <code>is_right</code>, True only if it’s a triangle and a² + b² = c² (assume c is the longest side).</p>",
+     starter:`a = 3\nb = 4\nc = 5\n`,
+     hints:["You need three comparisons joined with <code>and</code>: a + b &gt; c, a + c &gt; b, b + c &gt; a.","a² is <code>a * a</code> or <code>a ** 2</code>.","<code>is_right = is_triangle and a * a + b * b == c * c</code>"],
+     solution:`a = 3\nb = 4\nc = 5\nis_triangle = a + b > c and a + c > b and b + c > a\nis_right = is_triangle and a * a + b * b == c * c\nprint(is_triangle, is_right)`,
+     tests:`assert is_triangle == True, "3, 4, 5 is a triangle"\nassert is_right == True, "3, 4, 5 is a right triangle"`,
+     variants:[
+       {set:{a:"1", b:"2", c:"10"}, tests:`assert is_triangle == False, "1, 2, 10 is not a triangle"\nassert is_right == False, "1, 2, 10 is not a right triangle"`},
+       {set:{a:"5", b:"5", c:"8"}, tests:`assert is_triangle == True, "5, 5, 8 is a triangle"\nassert is_right == False, "5, 5, 8 is not a right triangle"`},
+       {set:{a:"2", b:"9", c:"3"}, tests:`assert is_triangle == False, "2, 9, 3 is not a triangle: 2 + 3 is less than 9"`}]}
+  ],
+  ifs:[
+    {id:"i6", tier:"challenge", title:"Ticket price",
+     prompt:"<p>Work out <code>price</code> and print it. Under 5: free (0). Under 13: 6. Aged 65 and over: 7. Everyone else pays 12, or 9 if they’re a student. On Tuesday, every price is cut in half.</p>",
+     starter:`age = 20\nis_student = True\nday = "Tuesday"\n`,
+     hints:["Handle the age groups first with if / elif / else, storing the result in price.","Students only matter in the “everyone else” group, so check is_student after the age checks.","Then, as a separate if (not elif), halve the price on Tuesday."],
+     solution:`age = 20\nis_student = True\nday = "Tuesday"\nif age < 5:\n    price = 0\nelif age < 13:\n    price = 6\nelif age >= 65:\n    price = 7\nelif is_student:\n    price = 9\nelse:\n    price = 12\nif day == "Tuesday":\n    price = price / 2\nprint(price)`,
+     tests:`assert price == 4.5, "A 20-year-old student on Tuesday pays 4.5"`,
+     variants:[
+       {set:{age:"70", is_student:"False", day:'"Monday"'}, tests:`assert price == 7, "A 70-year-old on Monday pays 7"`},
+       {set:{age:"30", is_student:"False", day:'"Saturday"'}, tests:`assert price == 12, "A 30-year-old non-student on Saturday pays 12"`},
+       {set:{age:"10", is_student:"True", day:'"Tuesday"'}, tests:`assert price == 3, "A 10-year-old on Tuesday pays 3, since the child price comes first"`},
+       {set:{age:"3", is_student:"False", day:'"Friday"'}, tests:`assert price == 0, "A 3-year-old gets in free"`}]},
+    {id:"i7", tier:"challenge", title:"Rock, paper, scissors",
+     prompt:"<p>Given <code>player</code> and <code>computer</code>, print <code>You win!</code>, <code>Computer wins!</code> or <code>Tie!</code>. Rock beats scissors, scissors beats paper, and paper beats rock.</p>",
+     starter:`player = "rock"\ncomputer = "scissors"\n`,
+     hints:["Check for a tie first: the two choices are equal.","There are exactly three ways for the player to win. Combine them with <code>or</code>, each one an <code>and</code> in parentheses.","If it’s not a tie and not a win, the computer wins."],
+     solution:`player = "rock"\ncomputer = "scissors"\nif player == computer:\n    print("Tie!")\nelif (player == "rock" and computer == "scissors") or (player == "scissors" and computer == "paper") or (player == "paper" and computer == "rock"):\n    print("You win!")\nelse:\n    print("Computer wins!")`,
+     expect:"You win!",
+     variants:[
+       {set:{player:'"paper"', computer:'"rock"'}, expect:"You win!"},
+       {set:{player:'"rock"', computer:'"paper"'}, expect:"Computer wins!"},
+       {set:{player:'"scissors"', computer:'"scissors"'}, expect:"Tie!"},
+       {set:{player:'"scissors"', computer:'"rock"'}, expect:"Computer wins!"}]}
+  ],
+  lists:[
+    {id:"l6", tier:"challenge", title:"Top three",
+     prompt:"<p>Create <code>top_three</code>: the three highest scores, from highest to lowest. Leave <code>scores</code> unchanged.</p>",
+     starter:`scores = [72, 95, 88, 61, 99, 84]\n`,
+     hints:["<code>sorted()</code> makes a new list, so scores stays the same.","<code>sorted(scores, reverse=True)</code> sorts from highest to lowest.","Slice off the first three with <code>[:3]</code>."],
+     solution:`scores = [72, 95, 88, 61, 99, 84]\ntop_three = sorted(scores, reverse=True)[:3]\nprint(top_three)`,
+     tests:`assert top_three == [99, 95, 88], "top_three should be [99, 95, 88]"\nassert scores == [72, 95, 88, 61, 99, 84], "scores should not be changed"`,
+     variants:[{set:{scores:"[5, 1, 4, 9]"}, tests:`assert top_three == [9, 5, 4], "For [5, 1, 4, 9], top_three should be [9, 5, 4]"`}]},
+    {id:"l7", tier:"challenge", title:"Rotate the line",
+     prompt:"<p>Create <code>rotated</code>: the queue after the first <code>k</code> people walk to the back, in order. Leave <code>queue</code> unchanged. Careful: k can be bigger than the line.</p>",
+     starter:`queue = ["Ana", "Ben", "Cal", "Dee"]\nk = 2\n`,
+     hints:["<code>queue[k:]</code> is everyone after the first k; <code>queue[:k]</code> is the first k. Join them with <code>+</code>.","If k is 6 and there are 4 people, that’s the same as k being 2.","<code>k % len(queue)</code> turns any k into a number smaller than the length."],
+     solution:`queue = ["Ana", "Ben", "Cal", "Dee"]\nk = 2\nshift = k % len(queue)\nrotated = queue[shift:] + queue[:shift]\nprint(rotated)`,
+     tests:`assert rotated == ["Cal", "Dee", "Ana", "Ben"], "With k = 2, rotated should be Cal, Dee, Ana, Ben"\nassert queue == ["Ana", "Ben", "Cal", "Dee"], "queue should not be changed"`,
+     variants:[
+       {set:{k:"1"}, tests:`assert rotated == ["Ben", "Cal", "Dee", "Ana"], "With k = 1, Ana moves to the back"`},
+       {set:{k:"0"}, tests:`assert rotated == ["Ana", "Ben", "Cal", "Dee"], "With k = 0, nothing changes"`},
+       {set:{k:"6"}, tests:`assert rotated == ["Cal", "Dee", "Ana", "Ben"], "With k = 6 and 4 people, the result matches k = 2"`}]}
+  ],
+  loops:[
+    {id:"f6", tier:"challenge", title:"Remove duplicates",
+     prompt:"<p>Create <code>unique</code>: the items from <code>items</code> with repeats removed, keeping each item where it first appeared.</p>",
+     starter:`items = ["a", "b", "a", "c", "b", "d"]\n`,
+     hints:["Start with an empty list: <code>unique = []</code>.","Loop over items, and only append an item if it isn’t in unique yet.","<code>if item not in unique:</code>"],
+     solution:`items = ["a", "b", "a", "c", "b", "d"]\nunique = []\nfor item in items:\n    if item not in unique:\n        unique.append(item)\nprint(unique)`,
+     tests:`assert unique == ["a", "b", "c", "d"], "unique should be a, b, c, d in that order"`,
+     must:[[/\bfor\b/, "Use a for loop."]],
+     variants:[
+       {set:{items:"[3, 3, 3]"}, tests:`assert unique == [3], "For [3, 3, 3], unique should be [3]"`},
+       {set:{items:"[]"}, tests:`assert unique == [], "An empty list should give an empty list"`},
+       {set:{items:'["x", "y", "z", "y", "x"]'}, tests:`assert unique == ["x", "y", "z"], "Keep the first-seen order"`}]},
+    {id:"f7", tier:"challenge", title:"Staircase",
+     prompt:"<p>Print a staircase of <code>#</code> that is <code>n</code> steps tall and leans right, like this for n = 4:</p><pre style=\"font-family:var(--font-code);margin:6px 0\">   #\n  ##\n ###\n####</pre>",
+     starter:`n = 4\n`,
+     hints:["Row 1 has 1 #, row 2 has 2, and so on up to n.","Each row also needs spaces in front: n minus the number of #.","<code>print(\" \" * (n - i) + \"#\" * i)</code> inside <code>for i in range(1, n + 1):</code>"],
+     solution:`n = 4\nfor i in range(1, n + 1):\n    print(" " * (n - i) + "#" * i)`,
+     expect:"   #\n  ##\n ###\n####",
+     must:[[/\bfor\b/, "Use a for loop."]],
+     variants:[{set:{n:"2"}, expect:" #\n##"},{set:{n:"6"}, expect:"     #\n    ##\n   ###\n  ####\n #####\n######"}]}
+  ],
+  functions:[
+    {id:"fn6", tier:"challenge", title:"Times table",
+     prompt:"<p>Write <code>make_table()</code> that returns the 3 by 3 multiplication table as a list of lists: <code>[[1, 2, 3], [2, 4, 6], [3, 6, 9]]</code>. Build it with loops rather than typing it out.</p>",
+     starter:``,
+     hints:["You need a loop inside a loop: one for rows, one for columns.","For each row, start an empty list, fill it, then append it to the table.","Each entry is <code>row * col</code>, with both going through <code>range(1, 4)</code>."],
+     solution:`def make_table():\n    table = []\n    for row in range(1, 4):\n        line = []\n        for col in range(1, 4):\n            line.append(row * col)\n        table.append(line)\n    return table\n\nprint(make_table())`,
+     tests:`assert make_table() == [[1, 2, 3], [2, 4, 6], [3, 6, 9]], "make_table() should return [[1, 2, 3], [2, 4, 6], [3, 6, 9]]"`,
+     must:[[/for[\s\S]*for/, "Use one loop inside another to build the table."]]},
+    {id:"fn7", tier:"challenge", title:"Longest streak",
+     prompt:"<p>Write <code>longest_streak()</code>. Inside it, use <code>rolls = [2, 2, 5, 5, 5, 1, 5, 5]</code>. Return the length of the longest run of the same number in a row (here, 3).</p>",
+     starter:``,
+     hints:["Keep two counters: the current streak and the best streak so far.","Compare each roll with the one before it: <code>rolls[i] == rolls[i - 1]</code>.","If they match, grow the current streak; if not, reset it to 1. Update best whenever current is bigger."],
+     solution:`def longest_streak():\n    rolls = [2, 2, 5, 5, 5, 1, 5, 5]\n    best = 1\n    current = 1\n    for i in range(1, len(rolls)):\n        if rolls[i] == rolls[i - 1]:\n            current = current + 1\n        else:\n            current = 1\n        if current > best:\n            best = current\n    return best\n\nprint(longest_streak())`,
+     tests:`assert longest_streak() == 3, "The longest streak is the three 5s in a row"`,
+     must:[[/\bfor\b/, "Use a loop to walk through the rolls."]]}
+  ],
+  params:[
+    {id:"p8", tier:"challenge", title:"Secret code",
+     prompt:"<p>Write <code>encrypt(text, shift)</code> that moves each lowercase letter <code>shift</code> places along the alphabet, wrapping from z back to a. Leave spaces and punctuation as they are. A negative shift moves backwards.</p>",
+     starter:`def encrypt(text, shift):\n    alphabet = "abcdefghijklmnopqrstuvwxyz"\n\n\nprint(encrypt("hello, world!", 5))\n`,
+     hints:["Build the answer one character at a time in a result string.","<code>alphabet.find(ch)</code> gives a letter’s position, or -1 if it isn’t a letter.","The new position is <code>(pos + shift) % 26</code>, which also wraps around and handles negative shifts."],
+     solution:`def encrypt(text, shift):\n    alphabet = "abcdefghijklmnopqrstuvwxyz"\n    result = ""\n    for ch in text:\n        pos = alphabet.find(ch)\n        if pos == -1:\n            result = result + ch\n        else:\n            result = result + alphabet[(pos + shift) % 26]\n    return result\n\nprint(encrypt("hello, world!", 5))`,
+     tests:`assert encrypt("abc", 1) == "bcd", "encrypt('abc', 1) should be bcd"\nassert encrypt("xyz", 3) == "abc", "encrypt('xyz', 3) should wrap around to abc"\nassert encrypt("hello, world!", 5) == "mjqqt, btwqi!", "Spaces and punctuation should stay the same"\nassert encrypt("bcd", -1) == "abc", "A shift of -1 should move backwards"\nassert encrypt("abc", 26) == "abc", "A shift of 26 goes all the way around"`},
+    {id:"p9", tier:"challenge", title:"Word counter",
+     prompt:"<p>Write <code>count_word(text, word)</code> that returns how many times <code>word</code> appears in <code>text</code> as a whole word, ignoring capital letters. For example, “cat” should not be counted inside “concatenate.”</p>",
+     starter:``,
+     hints:["<code>text.split()</code> gives whole words, so “concatenate” stays one word.","Compare lowercase versions: <code>.lower()</code> on both sides.","Count matches with the accumulator pattern and return the count."],
+     solution:`def count_word(text, word):\n    count = 0\n    for w in text.lower().split():\n        if w == word.lower():\n            count = count + 1\n    return count\n\nprint(count_word("The cat and the hat", "the"))`,
+     tests:`assert count_word("The cat and the hat", "the") == 2, "The cat and the hat has 2 of the"\nassert count_word("Cat cat CAT", "cat") == 3, "Capital letters should not matter"\nassert count_word("concatenate", "cat") == 0, "Only whole words count"\nassert count_word("", "cat") == 0, "Empty text has no words"\nassert count_word("hello", "HELLO") == 1, "The word itself may have capitals too"`}
+  ]
+};
+// Extra values for the original challenge problems.
+const MORE_VARIANTS = {
+  v5:[{set:{a:"10", b:"20", c:"30"}, tests:`assert (a, b, c) == (20, 30, 10), "With 10, 20, 30, the rotation should give 20, 30, 10"`}],
+  t5:[{set:{total_minutes:"200"}, expect:"3 hours and 20 minutes"},{set:{total_minutes:"59"}, expect:"0 hours and 59 minutes"}],
+  s5:[{set:{email:'"grace@navy.mil"'}, tests:`assert username == "grace" and domain == "navy.mil", "For grace@navy.mil, username should be grace and domain navy.mil"`}],
+  b5:[{set:{year:"1900"}, tests:`assert is_leap == False, "1900 is not a leap year"`},{set:{year:"2000"}, tests:`assert is_leap == True, "2000 is a leap year"`},{set:{year:"2023"}, tests:`assert is_leap == False, "2023 is not a leap year"`}],
+  i5:[{set:{n:"9"}, expect:"Fizz"},{set:{n:"10"}, expect:"Buzz"},{set:{n:"7"}, expect:"7"}],
+  l5:[{set:{nums:"[7, 2, 9]"}, tests:`assert sorted_nums == [2, 7, 9] and median == 7, "For [7, 2, 9], median should be 7"`}]
+};
+LESSONS.forEach(L => {
+  (MORE_CHALLENGES[L.id] || []).forEach(e => L.exercises.push(e));
+  L.exercises.forEach(e => { if (MORE_VARIANTS[e.id]) e.variants = MORE_VARIANTS[e.id]; });
+});
+
+/* ================= STATE ================= */
+const KEY = "inspyre-v1";
+const SANDBOX_CODE = `# This is your sandbox. Write any Python here and press Run.\nprint("Hello, Python!")\n`;
+const ALL_EX = []; const EX = {};
+LESSONS.forEach((L, li) => L.exercises.forEach(e => { e.lesson = li; ALL_EX.push(e); EX[e.id] = e; }));
+
+function loadState(){
+  const d = {level:null, lesson:0, tab:"learn", tier:null, exId:null, pick:{}, solved:{}, codes:{}, hints:{}, attempts:{}, revealed:{}};
+  try { const raw = localStorage.getItem(KEY); if (raw) Object.assign(d, JSON.parse(raw)); } catch(e) {}
+  return d;
+}
+let S = loadState();
+function save(){ try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e) {} }
+
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+
+/* ================= HIGHLIGHTING ================= */
+const KW = new Set("def return if elif else for in while and or not True False None import from as class pass break continue lambda try except finally with is global".split(" "));
+const BI = new Set("print len range type int str float bool list input sum min max sorted abs round enumerate isinstance".split(" "));
+function highlight(src){
+  const re = /(#[^\n]*)|("(?:[^"\\\n]|\\.)*"?|'(?:[^'\\\n]|\\.)*'?)|\b(\d+(?:\.\d+)?)\b|([A-Za-z_]\w*)/g;
+  let out = "", last = 0, m;
+  while ((m = re.exec(src))) {
+    out += esc(src.slice(last, m.index));
+    if (m[1]) out += `<span class="tk-c">${esc(m[1])}</span>`;
+    else if (m[2]) out += `<span class="tk-s">${esc(m[2])}</span>`;
+    else if (m[3]) out += `<span class="tk-n">${m[3]}</span>`;
+    else {
+      const w = m[4];
+      if (KW.has(w)) out += `<span class="tk-k">${w}</span>`;
+      else if (BI.has(w)) out += `<span class="tk-b">${w}</span>`;
+      else if (src[re.lastIndex] === "(") out += `<span class="tk-f">${w}</span>`;
+      else out += w;
+    }
+    last = re.lastIndex;
+  }
+  return out + esc(src.slice(last));
+}
+
+/* ================= EDITOR ================= */
+const ta = $("#code"), hlEl = $("#hl"), gutter = $("#gutter");
+let errLine = null, escPressed = false;
+function refreshEditor(){
+  const v = ta.value;
+  hlEl.innerHTML = highlight(v) + "\n";
+  const n = v.split("\n").length;
+  let g = "";
+  for (let i = 1; i <= n; i++) g += (i === errLine ? `<span class="err">${i}</span>` : i) + (i < n ? "\n" : "");
+  gutter.innerHTML = g + "\n";
+  syncScroll();
+}
+function syncScroll(){
+  hlEl.parentElement.scrollTop = ta.scrollTop;
+  hlEl.parentElement.scrollLeft = ta.scrollLeft;
+  gutter.scrollTop = ta.scrollTop;
+}
+function insertText(t){
+  ta.focus();
+  let ok = false;
+  try { ok = document.execCommand("insertText", false, t); } catch(e) {}
+  if (!ok) { ta.setRangeText(t, ta.selectionStart, ta.selectionEnd, "end"); }
+  onEdit();
+}
+let saveTimer;
+function onEdit(){
+  errLine = null; refreshEditor();
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(() => { S.codes[S.exId || "sandbox"] = ta.value; save(); }, 250);
+}
+ta.addEventListener("input", onEdit);
+ta.addEventListener("scroll", syncScroll);
+ta.addEventListener("keydown", e => {
+  const v = ta.value, s = ta.selectionStart, en = ta.selectionEnd;
+  if (e.key === "Escape") { escPressed = true; return; }
+  if ((e.ctrlKey || e.metaKey) && e.key === "Enter") { e.preventDefault(); e.shiftKey && S.exId ? check() : run(); return; }
+  if (e.key === "Tab") {
+    if (escPressed) { escPressed = false; return; }
+    e.preventDefault();
+    const ls = v.lastIndexOf("\n", s - 1) + 1;
+    if (s !== en && v.slice(s, en).includes("\n")) {
+      const block = v.slice(ls, en);
+      const nb = e.shiftKey ? block.replace(/^ {1,4}/gm, "") : block.replace(/^/gm, "    ");
+      ta.setSelectionRange(ls, en); insertText(nb); ta.setSelectionRange(ls, ls + nb.length);
+    } else if (e.shiftKey) {
+      const lead = v.slice(ls).match(/^ {1,4}/);
+      if (lead) { ta.setSelectionRange(ls, ls + lead[0].length); insertText(""); ta.setSelectionRange(Math.max(ls, s - lead[0].length), Math.max(ls, s - lead[0].length)); }
+    } else insertText("    ");
+    return;
+  }
+  escPressed = false;
+  if (e.key === "Enter" && !e.shiftKey && !e.ctrlKey && !e.metaKey) {
+    e.preventDefault();
+    const ls = v.lastIndexOf("\n", s - 1) + 1;
+    const line = v.slice(ls, s);
+    let indent = line.match(/^ */)[0];
+    if (/:\s*(#.*)?$/.test(line)) indent += "    ";
+    insertText("\n" + indent);
+    return;
+  }
+  if (e.key === "Backspace" && s === en && s > 0) {
+    const ls = v.lastIndexOf("\n", s - 1) + 1;
+    const before = v.slice(ls, s);
+    if (before.length > 0 && /^ +$/.test(before)) {
+      e.preventDefault();
+      const cut = before.length % 4 === 0 ? 4 : before.length % 4;
+      ta.setSelectionRange(s - cut, s); insertText("");
+    }
+  }
+});
+function setEditor(code){ ta.value = code; ta.scrollTop = 0; errLine = null; refreshEditor(); }
+
+/* ================= PYTHON ENGINE ================= */
+const SENT = "__PYPATH_CHECK__";
+const engineReady = typeof Sk !== "undefined";
+function builtinRead(x){
+  if (Sk.builtinFiles === undefined || Sk.builtinFiles.files[x] === undefined) throw "File not found: '" + x + "'";
+  return Sk.builtinFiles.files[x];
+}
+function runPython(code, onOut){
+  return new Promise(resolve => {
+    if (!engineReady) { resolve({out:"", err:{engine:true}}); return; }
+    let out = "";
+    Sk.configure({
+      output: t => { out += t; onOut && onOut(t); },
+      read: builtinRead,
+      __future__: Sk.python3,
+      execLimit: 5000, yieldLimit: 100, killableWhile: true, killableFor: true,
+      inputfun: p => { try { return window.prompt(p) || ""; } catch(e) { return ""; } },
+      inputfunTakesPrompt: true
+    });
+    Sk.execStart = Date.now();
+    Sk.misceval.asyncToPromise(() => Sk.importMainWithBody("<stdin>", false, code, true))
+      .then(() => resolve({out, err:null}), err => resolve({out, err}));
+  });
+}
+function parseErr(e){
+  if (e && e.engine) return {type:"EngineError", msg:"The Python engine didn’t load.", line:null, full:""};
+  let type = "Error", msg = "", line = null, full = "";
+  try { full = e.toString(); } catch(_) { full = String(e); }
+  try {
+    if (e && e.tp$name) type = e.tp$name;
+    if (e && e.args && e.args.v && e.args.v.length) { const a = e.args.v[0]; msg = (a && a.v !== undefined) ? String(a.v) : String(a); }
+    if (e && e.traceback && e.traceback.length) line = e.traceback[0].lineno;
+  } catch(_) {}
+  if (!line) { const m = full.match(/on line (\d+)/); if (m) line = +m[1]; }
+  if (!msg) msg = full.replace(/ on line \d+.*$/, "");
+  if (/Time(out|Limit)/i.test(type + full)) type = "TimeoutError";
+  return {type, msg, line, full};
+}
+function explain(p, code){
+  const lines = code.split("\n");
+  const L = p.line && lines[p.line - 1] !== undefined ? lines[p.line - 1] : null;
+  const m = p.msg;
+  switch (p.type) {
+    case "SyntaxError": case "ParseError": case "TokenError": {
+      const cand = [p.line, p.line - 1].filter(n => n && lines[n - 1] !== undefined);
+      for (const n of cand) {
+        const t = lines[n - 1].replace(/#.*$/, "").trimEnd();
+        if (/^\s*(if|elif|else|for|while|def)\b/.test(t) && !t.endsWith(":")) return `Line ${n} starts a block but doesn’t end with a colon. Add <code>:</code> at the end of it.`;
+      }
+      return "Python couldn’t read this line. Look for a missing colon at the end of if, for or def lines, quotes that aren’t closed, or brackets that don’t match.";
+    }
+    case "IndentationError":
+      return "The spacing at the start of a line is off. Lines that belong to an if, else, for or def need 4 spaces in front. Lines outside a block shouldn’t be indented.";
+    case "NameError": {
+      const nm = (m.match(/'([^']+)'/) || [])[1] || "that name";
+      if (nm === "true" || nm === "false") return `Booleans are capitalized in Python: write <code>${nm === "true" ? "True" : "False"}</code>.`;
+      return `Python doesn’t know anything called <code>${esc(nm)}</code>. Check the spelling and capital letters, make sure you created it on an earlier line, and put quotes around it if you meant it as text.`;
+    }
+    case "TypeError":
+      if (/concatenate|unsupported operand.*'str'.*'int'|unsupported operand.*'int'.*'str'|must be str/.test(m)) return "You tried to join text and a number with <code>+</code>. Convert the number to text first with <code>str()</code>, or separate the pieces with commas inside print.";
+      if (/argument/.test(m)) return "A function got the wrong number of inputs. Compare what’s inside the parentheses where you call it with the parameters in its def line.";
+      if (/not callable/.test(m)) return "Something that isn’t a function was called with parentheses. Check you haven’t reused a function’s name as a variable.";
+      if (/NoneType/.test(m)) return "A value was None. That usually means a function printed instead of returning, or you saved the result of a method like <code>.append()</code>.";
+      return "An operation got a type it can’t work with. Check what type each value is with <code>type()</code>.";
+    case "IndexError":
+      return "You asked for a position that doesn’t exist. The first item is at index 0, and the last is at <code>len(...) - 1</code>.";
+    case "ValueError":
+      if (/int\(\)|literal/.test(m)) return "<code>int()</code> can only convert text that looks like a whole number. For decimals, use <code>float()</code>.";
+      return "A function got a value of the right type but the wrong kind, such as removing an item that isn’t in the list.";
+    case "ZeroDivisionError":
+      return "You divided by zero. Check the value you’re dividing by first, for example with <code>if len(numbers) == 0:</code>.";
+    case "AttributeError":
+      return "That method doesn’t exist for this type of value. Check the spelling; methods are lowercase, like <code>.upper()</code> and <code>.append()</code>.";
+    case "TimeoutError":
+      return "Your code ran for more than 5 seconds, so it was stopped. A loop may never be finishing.";
+    case "EngineError":
+      return "Code can’t run until the Python engine loads. Check your internet connection and reload the page.";
+    default:
+      return "Read the message above for the clue, then look closely at the line it points to.";
+  }
+}
+function errorCard(p, code, prefix){
+  const lines = code.split("\n");
+  const L = p.line && lines[p.line - 1] !== undefined ? lines[p.line - 1] : null;
+  const label = {SyntaxError:"Syntax error", ParseError:"Syntax error", TokenError:"Syntax error", IndentationError:"Indentation error", NameError:"Unknown name", TypeError:"Type mix-up", IndexError:"Index out of range", ValueError:"Value problem", ZeroDivisionError:"Division by zero", AttributeError:"Unknown method", TimeoutError:"Took too long", EngineError:"Engine not loaded"}[p.type] || p.type;
+  return `<div class="err-card"><div class="err-type">${prefix ? esc(prefix) + " " : ""}${esc(label)}${p.line && L !== null ? " on line " + p.line : ""}</div>
+    <div class="err-raw">${esc(p.type)}: ${esc(p.msg)}</div>
+    <p>${explain(p, code)}</p>
+    ${L !== null && L.trim() ? `<code class="err-line">${esc(L)}</code>` : ""}</div>`;
+}
+
+/* ================= RUN & CHECK ================= */
+const outEl = $("#output"), fbEl = $("#feedback");
+let running = false;
+function setBusy(b){ running = b; $("#runBtn").disabled = b; $("#checkBtn").disabled = b; $("#runBtn").textContent = b ? "Running…" : "Run"; }
+function emptyOut(){ outEl.innerHTML = `<span class="muted">Your output will show up here. Press Run to try your code.</span>`; }
+async function run(){
+  if (running) return;
+  setBusy(true); hideFeedback();
+  const code = ta.value;
+  outEl.textContent = "";
+  let any = false;
+  const { err } = await runPython(code, t => { any = true; outEl.append(t); });
+  if (err) {
+    const p = parseErr(err);
+    if (p.line && p.line <= code.split("\n").length) { errLine = p.line; refreshEditor(); }
+    outEl.insertAdjacentHTML("beforeend", errorCard(p, code));
+  } else if (!any) {
+    outEl.innerHTML = `<span class="muted">Your code ran without printing anything. Use print() to see results.</span>`;
+  }
+  outEl.scrollTop = outEl.scrollHeight;
+  setBusy(false);
+}
+const norm = s => s.replace(/\r/g, "").split("\n").map(l => l.trimEnd()).join("\n").replace(/\n+$/, "");
+
+async function checkVariants(ex, code){
+  for (const v of ex.variants) {
+    let c = code;
+    const keys = Object.keys(v.set);
+    for (const k of keys) {
+      const re = new RegExp("^([ \\t]*)" + k + "\\s*=(?!=).*$", "m");
+      if (!re.test(c)) return {title:"Keep the starting variables.", body:"The checker swaps in new values for <code>" + esc(keys.join(", ")) + "</code> to test your code, so keep those lines at the top."};
+      c = c.replace(re, "$1" + k + " = " + v.set[k]);
+    }
+    const desc = keys.map(k => k + " = " + v.set[k]).join(", ");
+    const { out, err } = await runPython(c + "\nprint('" + SENT + "')\n" + (v.tests || ""));
+    const idx = out.indexOf(SENT);
+    const so = idx >= 0 ? out.slice(0, idx) : out;
+    if (err) {
+      const p = parseErr(err);
+      const why = p.type === "AssertionError" ? esc(p.msg) + "." : "your code raised " + esc(p.type) + ": " + esc(p.msg) + ".";
+      return {title:"It works for the starting values, but not for others.", body:"The checker tried <code>" + esc(desc) + "</code>, and " + why + " Make sure your code works from the variables instead of fixed answers."};
+    }
+    if (v.expect !== undefined && norm(so) !== norm(v.expect)) return {title:"It works for the starting values, but not for others.", body:"The checker tried <code>" + esc(desc) + "</code>. Make sure your code works from the variables instead of fixed answers.", compare:[v.expect, so]};
+  }
+  return null;
+}
+async function check(){
+  const ex = EX[S.exId]; if (!ex || running) return;
+  setBusy(true);
+  const code = ta.value;
+  const full = code + "\nprint('" + SENT + "')\n" + (ex.tests || "");
+  const { out, err } = await runPython(full);
+  const idx = out.indexOf(SENT);
+  const studentOut = idx >= 0 ? out.slice(0, idx) : out;
+  outEl.textContent = studentOut;
+  S.attempts[ex.id] = (S.attempts[ex.id] || 0) + 1;
+  let fail = null;
+  if (err && idx < 0) {
+    const p = parseErr(err);
+    if (p.line && p.line <= code.split("\n").length) { errLine = p.line; refreshEditor(); }
+    outEl.insertAdjacentHTML("beforeend", errorCard(p, code));
+    fail = {title:"Your code hit an error before it could be checked.", body:"Read the explanation in the output panel, fix that line, and check again."};
+  } else if (err) {
+    const p = parseErr(err);
+    if (p.type === "AssertionError") fail = {title:"Not quite yet.", body: esc(p.msg || "One of the checks didn’t pass.") + "."};
+    else if (p.type === "NameError") {
+      const nm = (p.msg.match(/'([^']+)'/) || [])[1] || "";
+      fail = {title:"Something’s missing.", body:`The checker looked for <code>${esc(nm)}</code> and couldn’t find it. Make sure the name matches the task exactly, including spelling and capitals.`};
+    } else {
+      fail = {title:"Your code ran, but crashed when the checker tested it.", body: explain(p, code)};
+      outEl.insertAdjacentHTML("beforeend", errorCard(p, code, "While checking:"));
+    }
+  }
+  if (!fail && ex.expect !== undefined && norm(studentOut) !== norm(ex.expect)) {
+    fail = {title:"The output doesn’t match yet.", body:"Compare what your code printed with what the task expects. Spelling, capitals and spaces all count.", compare:[ex.expect, studentOut]};
+  }
+  const stripped = code.replace(/#[^\n]*/g, "");
+  if (!fail && ex.must) for (const [re, msg] of ex.must) if (!re.test(stripped)) { fail = {title:"Close, but there’s one more requirement.", body: esc(msg)}; break; }
+  if (!fail && ex.custom === "rotate") {
+    const after = stripped.split("\n").slice(3).join("\n");
+    if (/^\s*[abc]\s*=\s*\d+\s*$/m.test(after)) fail = {title:"Close, but there’s one more requirement.", body:"Move values between the variables instead of typing the numbers again."};
+  }
+  if (!fail && ex.mustNot) for (const [re, msg] of ex.mustNot) if (msg && re.test(stripped)) { fail = {title:"Close, but there’s one more requirement.", body: esc(msg)}; break; }
+  if (!fail && ex.variants) fail = await checkVariants(ex, code);
+  if (fail) {
+    showFeedback(false, fail);
+  } else {
+    const prev = S.solved[ex.id];
+    S.solved[ex.id] = S.revealed[ex.id] ? (prev === "solved" ? "solved" : "helped") : "solved";
+    showFeedback(true, {title: pick(["Correct, nicely done.", "That works.", "Solved."]), body: passMessage(ex)});
+    renderTrail(); renderProgress();
+  }
+  save();
+  renderPractice(true);
+  setBusy(false);
+}
+const pick = a => a[Math.floor(Math.random() * a.length)];
+function passMessage(ex){
+  if (S.solved[ex.id] === "helped") return "You finished it with the solution’s help. Try the next one on your own.";
+  const h = S.hints[ex.id] || 0;
+  if (h === 0 && (S.attempts[ex.id] || 0) === 1) return "First try, with no hints.";
+  if (h > 0) return "You used " + h + (h === 1 ? " hint" : " hints") + " and got there.";
+  return "Persistence paid off.";
+}
+function showFeedback(pass, f){
+  fbEl.hidden = false;
+  fbEl.className = "feedback " + (pass ? "pass" : "fail");
+  let html = `<div class="fb-text"><strong>${f.title}</strong>${f.body}`;
+  if (f.compare) html += `<div class="fb-compare"><div><small>Expected</small><pre>${esc(f.compare[0])}</pre></div><div><small>Your output</small><pre>${esc(f.compare[1].replace(/\n+$/, "")) || "(nothing printed)"}</pre></div></div>`;
+  html += `</div>`;
+  if (pass) { const nx = nextExercise(); if (nx) html += `<button class="btn" id="nextBtn">${nx.label}</button>`; }
+  fbEl.innerHTML = html;
+  const nb = $("#nextBtn"); if (nb) nb.onclick = () => nextExercise().go();
+}
+function hideFeedback(){ fbEl.hidden = true; fbEl.innerHTML = ""; }
+function nextExercise(){
+  const ex = EX[S.exId]; if (!ex) return null;
+  const L = LESSONS[ex.lesson];
+  const same = L.exercises.filter(e => e.tier === ex.tier);
+  const nextSame = same.slice(same.indexOf(ex) + 1).find(e => !S.solved[e.id]) || same.find(e => !S.solved[e.id]);
+  if (nextSame) return {label:"Next problem", go: () => selectExercise(nextSame.id)};
+  const ti = TIERS.findIndex(t => t.id === ex.tier);
+  if (ti < 2) { const up = L.exercises.find(e => e.tier === TIERS[ti + 1].id && !S.solved[e.id]); if (up) return {label:`Try ${TIERS[ti + 1].name}`, go: () => { S.tier = up.tier; selectExercise(up.id); }}; }
+  if (ex.lesson < LESSONS.length - 1) return {label:"Next lesson", go: () => selectLesson(ex.lesson + 1)};
+  return null;
+}
+
+/* ================= RENDERING ================= */
+S.step = S.step || {};
+const deckEl = $("#deck");
+let track = null, curStep = 0, scrollTimer = null;
+
+function lessonStats(L){
+  return {t: L.exercises.length, s: L.exercises.filter(e => S.solved[e.id]).length};
+}
+function ringHTML(L, i){
+  const {t, s} = lessonStats(L);
+  return `<span class="ring ${s === t ? "done" : ""}" style="--p:${Math.round(s / t * 100)}"><b>${s === t ? "✓" : i + 1}</b></span>`;
+}
+function renderProgress(){
+  const s = ALL_EX.filter(e => S.solved[e.id]).length;
+  const el = $("#menuProgress"); if (el) el.textContent = `${s} of ${ALL_EX.length} problems solved`;
+}
+function renderTrail(){
+  const L = LESSONS[S.lesson];
+  $("#switchBtn").innerHTML = `${ringHTML(L, S.lesson)}<span class="label"><small>Lesson ${S.lesson + 1}</small>${L.title}</span><span class="caret" aria-hidden="true"></span>`;
+  $("#switchBtn").setAttribute("aria-label", `Lesson ${S.lesson + 1}: ${L.title}. Choose a lesson`);
+  const items = LESSONS.map((M, i) => {
+    const {t, s} = lessonStats(M);
+    return `<li><button class="menu-item" data-i="${i}" aria-current="${i === S.lesson}">${ringHTML(M, i)}<span><strong>${M.title}</strong><small>${s} of ${t} solved</small></span></button></li>`;
+  }).join("");
+  $("#lessonMenu").innerHTML = `<ol>${items}</ol><div class="menu-foot"><span id="menuProgress"></span><button class="linkish" id="wipeBtn">Start over</button></div>`;
+  $("#lessonMenu").querySelectorAll(".menu-item").forEach(b => b.onclick = () => { closeMenu(); selectLesson(+b.dataset.i); });
+  armTwoStep($("#wipeBtn"), "Click again to erase", () => {
+    try { localStorage.removeItem(KEY); } catch(e) {}
+    S = loadState(); S.step = {}; closeMenu(); init(true);
+  });
+  renderProgress();
+}
+function armTwoStep(btn, confirmLabel, fn){
+  if (!btn) return;
+  const orig = btn.textContent; let armed = false, t;
+  btn.onclick = () => {
+    if (armed) { clearTimeout(t); armed = false; btn.textContent = orig; fn(); return; }
+    armed = true; btn.textContent = confirmLabel;
+    t = setTimeout(() => { armed = false; btn.textContent = orig; }, 3000);
+  };
+}
+
+function stepsFor(L){
+  return [{kind:"intro", label:"Overview"}]
+    .concat(L.sections.map((s, i) => ({kind:"concept", i, label:s.h})))
+    .concat([{kind:"watch", label:"Before you practice"}, {kind:"practice", label:"Practice"}]);
+}
+function cardHTML(L, st, n, total){
+  const lv = S.level || "starter";
+  const head = `<p class="step-label">${n + 1} of ${total}</p>`;
+  if (st.kind === "intro") {
+    return `${head}<h2>${L.title}</h2><p class="lead">${L.summary}</p>
+      <p class="small" style="margin-bottom:2px">In this lesson</p>
+      <ol class="outline">${L.sections.map(s => `<li>${s.h}</li>`).join("")}<li>Practice</li></ol>
+      ${lv === "starter"
+        ? `<div class="note tip"><strong>Tip for getting started</strong><p>${L.tip}</p></div>`
+        : `<details class="fold"><summary>Tip for getting started</summary><div class="fold-body">${L.tip}</div></details>`}`;
+  }
+  if (st.kind === "concept") {
+    const sec = L.sections[st.i];
+    return `${head}<h2>${sec.h}</h2><p>${sec.p}</p>
+      <div class="example"><pre>${highlight(sec.code)}</pre>
+      <div class="example-bar"><button class="try-btn" data-sec="${st.i}">Run this in the editor</button></div></div>`;
+  }
+  if (st.kind === "watch") {
+    return `${head}<h2>Before you practice</h2>
+      <div class="note warn"><strong>Common mistake</strong><p>${L.mistake}</p></div>
+      <details class="fold" ${lv === "challenge" ? "open" : ""}><summary>Going further</summary><div class="fold-body">${L.deeper}</div></details>`;
+  }
+  return `${head}<div id="practiceBody"></div>`;
+}
+function renderDeck(){
+  const L = LESSONS[S.lesson];
+  const steps = stepsFor(L);
+  curStep = Math.min(S.step[L.id] || 0, steps.length - 1);
+  deckEl.innerHTML = `<div class="deck-head"><h1>${L.title}</h1>
+      <div class="dots" role="group" aria-label="Lesson parts">${steps.map((s, i) => `<button class="dot ${s.kind === "practice" ? "prac" : ""}" data-i="${i}" aria-label="${s.label}" title="${s.label}"></button>`).join("")}</div></div>
+    <div class="track" id="track">${steps.map((s, i) => `<article class="card" aria-label="${s.label}"><div class="card-inner">${cardHTML(L, s, i, steps.length)}</div></article>`).join("")}</div>
+    <div class="deck-nav"><button class="btn quiet" id="prevBtn">Back</button><button class="btn next" id="nextStepBtn"><span></span></button></div>`;
+  track = $("#track");
+  deckEl.querySelectorAll(".dot").forEach(d => d.onclick = () => goTo(+d.dataset.i, true));
+  deckEl.querySelectorAll(".try-btn[data-sec]").forEach(b => b.onclick = () => {
+    S.exId = null; save(); setEditor(L.sections[+b.dataset.sec].code); S.codes.sandbox = ta.value; renderWs(); hideFeedback(); run();
+  });
+  $("#prevBtn").onclick = () => goTo(curStep - 1, true);
+  $("#nextStepBtn").onclick = () => {
+    if (curStep < steps.length - 1) goTo(curStep + 1, true);
+    else if (S.lesson < LESSONS.length - 1) selectLesson(S.lesson + 1);
+  };
+  track.addEventListener("scroll", () => {
+    clearTimeout(scrollTimer);
+    scrollTimer = setTimeout(() => {
+      const i = Math.round(track.scrollLeft / Math.max(1, track.clientWidth));
+      if (i !== curStep) setStep(i);
+    }, 90);
+  });
+  requestAnimationFrame(() => { track.scrollLeft = curStep * track.clientWidth; setStep(curStep, true); });
+}
+const reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+function goTo(i, smooth){
+  const steps = stepsFor(LESSONS[S.lesson]);
+  i = Math.max(0, Math.min(steps.length - 1, i));
+  track.scrollTo({left: i * track.clientWidth, behavior: smooth && !reduceMotion ? "smooth" : "auto"});
+  setStep(i);
+}
+function setStep(i, force){
+  const L = LESSONS[S.lesson];
+  const steps = stepsFor(L);
+  if (i === curStep && !force) return;
+  curStep = i; S.step[L.id] = i; save();
+  deckEl.querySelectorAll(".dot").forEach((d, k) => d.setAttribute("aria-current", String(k === i)));
+  deckEl.querySelectorAll(".card").forEach((c, k) => { c.inert = k !== i; c.setAttribute("aria-hidden", String(k !== i)); });
+  $("#prevBtn").disabled = i === 0;
+  const nb = $("#nextStepBtn");
+  if (i < steps.length - 1) { nb.hidden = false; nb.className = "btn next" + (i === steps.length - 2 ? " primary" : ""); nb.querySelector("span").textContent = i === 0 ? "Start" : "Next: " + steps[i + 1].label; }
+  else if (S.lesson < LESSONS.length - 1) { nb.hidden = false; nb.className = "btn next"; nb.querySelector("span").textContent = "Next lesson: " + LESSONS[S.lesson + 1].title; }
+  else nb.hidden = true;
+  if (steps[i].kind === "practice") enterPractice();
+}
+function enterPractice(){
+  const L = LESSONS[S.lesson];
+  const cur = EX[S.exId];
+  if (!cur || cur.lesson !== S.lesson) {
+    const tier = S.tier || S.level || "starter";
+    const remembered = EX[S.pick[L.id]];
+    const target = (remembered && remembered.tier === tier) ? remembered : (L.exercises.find(e => e.tier === tier && !S.solved[e.id]) || L.exercises.find(e => e.tier === tier));
+    selectExercise(target.id);
+  } else renderPractice(true);
+}
+
+function renderPractice(keepFeedback){
+  const body = $("#practiceBody"); if (!body) return;
+  const L = LESSONS[S.lesson];
+  const ex = EX[S.exId] && EX[S.exId].lesson === S.lesson ? EX[S.exId] : null;
+  const tier = ex ? ex.tier : (S.tier || S.level || "starter");
+  const list = L.exercises.filter(e => e.tier === tier);
+  let h = `<div class="prac-top"><h2>Practice</h2><div class="seg" role="group" aria-label="Difficulty">${TIERS.map(t => `<button data-tier="${t.id}" aria-pressed="${t.id === tier}">${t.name}</button>`).join("")}</div></div>
+    <p class="tier-blurb">${TIERS.find(t => t.id === tier).blurb}</p>
+    <div class="pips" role="group" aria-label="Problems">${list.map((e, k) => {
+      const st = S.solved[e.id];
+      return `<button class="pip ${st || ""}" data-id="${e.id}" aria-current="${ex && ex.id === e.id}" aria-label="Problem ${k + 1}: ${e.title}${st ? ", solved" : ""}" title="${e.title}">${k + 1}</button>`;
+    }).join("")}<span class="of">${list.filter(e => S.solved[e.id]).length} of ${list.length} solved</span></div>`;
+  if (ex) {
+    const shown = S.hints[ex.id] || 0;
+    const att = S.attempts[ex.id] || 0;
+    const canSolve = shown >= ex.hints.length || att >= 3 || S.revealed[ex.id];
+    h += `<h3 class="ex-title">${ex.title}</h3><div class="ex-prompt">${ex.prompt}</div>
+      <details class="fold" id="hintFold" ${shown ? "open" : ""}><summary>Need a hint?</summary><div class="fold-body">`;
+    for (let i = 0; i < shown; i++) h += `<div class="hint"><b>Hint ${i + 1}</b>${ex.hints[i]}</div>`;
+    if (shown && shown < ex.hints.length) h += `<button class="btn" id="hintBtn">Show another hint</button>`;
+    if (shown >= ex.hints.length) h += `<p class="small">That’s every hint for this problem.</p>`;
+    h += `</div></details>`;
+    if (canSolve) {
+      h += `<details class="fold" id="solFold" ${S.revealed[ex.id] ? "open" : ""}><summary>Show the solution</summary><div class="fold-body">
+        <div class="example" style="margin-top:0"><pre>${highlight(ex.solution)}</pre><div class="example-bar"><button class="try-btn" id="loadSol">Copy into the editor</button></div></div>
+        <p class="small" style="margin-top:8px">Read it line by line and make sure you could explain each part, then try the next problem on your own.</p></div></details>`;
+    } else {
+      h += `<p class="small" style="margin-top:12px">The solution unlocks after every hint, or after 3 checks.</p>`;
+    }
+    const nudge = makeNudge(L, tier, ex);
+    if (nudge) h += `<p class="nudge">${nudge.text}<button class="linkish" id="nudgeBtn">${nudge.label}</button></p>`;
+  }
+  body.innerHTML = h;
+  body.querySelectorAll(".seg button").forEach(b => b.onclick = () => {
+    S.tier = b.dataset.tier;
+    const first = L.exercises.find(e => e.tier === S.tier && !S.solved[e.id]) || L.exercises.find(e => e.tier === S.tier);
+    selectExercise(first.id);
+  });
+  body.querySelectorAll(".pip").forEach(b => b.onclick = () => selectExercise(b.dataset.id));
+  if (ex) {
+    const hf = $("#hintFold");
+    hf.addEventListener("toggle", () => { if (hf.open && !(S.hints[ex.id] || 0)) { S.hints[ex.id] = 1; save(); renderPractice(true); } });
+    const hb = $("#hintBtn"); if (hb) hb.onclick = () => { S.hints[ex.id] = (S.hints[ex.id] || 0) + 1; save(); renderPractice(true); };
+    const sf = $("#solFold"); if (sf) sf.addEventListener("toggle", () => { if (sf.open && !S.revealed[ex.id]) { S.revealed[ex.id] = true; save(); } });
+    const ls = $("#loadSol"); if (ls) ls.onclick = () => { setEditor(ex.solution); S.codes[ex.id] = ta.value; save(); ta.focus(); };
+    const nb = $("#nudgeBtn"); if (nb) { const n = makeNudge(L, tier, ex); nb.onclick = n.go; }
+  }
+  if (!keepFeedback) hideFeedback();
+}
+function makeNudge(L, tier, ex){
+  const ti = TIERS.findIndex(t => t.id === tier);
+  const firstIn = id => L.exercises.find(e => e.tier === id && !S.solved[e.id]) || L.exercises.find(e => e.tier === id);
+  const jump = id => () => { S.tier = id; selectExercise(firstIn(id).id); };
+  const allDone = L.exercises.filter(e => e.tier === tier).every(e => S.solved[e.id]);
+  if (!S.solved[ex.id] && (S.attempts[ex.id] || 0) >= 3 && ti > 0) return {text:`Stuck? ${TIERS[ti - 1].name} problems practice the same idea in smaller steps.`, label:`Try ${TIERS[ti - 1].name}`, go: jump(TIERS[ti - 1].id)};
+  if (allDone && ti < 2) return {text:`Every ${TIERS[ti].name} problem here is solved.`, label:`Move up to ${TIERS[ti + 1].name}`, go: jump(TIERS[ti + 1].id)};
+  if (S.solved[ex.id] === "solved" && !S.hints[ex.id] && S.attempts[ex.id] === 1 && ti < 2) return {text:"That one came easily.", label:`Try ${TIERS[ti + 1].name}`, go: jump(TIERS[ti + 1].id)};
+  return null;
+}
+function renderWs(){
+  const ex = EX[S.exId];
+  const ctx = $("#wsContext");
+  if (ex) {
+    ctx.innerHTML = `<span class="badge ${ex.tier}">${TIERS.find(t => t.id === ex.tier).name}</span><span class="title">${ex.title}</span>`;
+    $("#checkBtn").hidden = false;
+  } else {
+    ctx.innerHTML = `<span class="title">Sandbox</span>`;
+    $("#checkBtn").hidden = true;
+  }
+}
+
+/* ================= NAVIGATION ================= */
+function selectLesson(i){
+  S.lesson = i; S.exId = null; save();
+  loadEditorFor(); renderWs(); hideFeedback(); emptyOut();
+  renderTrail(); renderDeck();
+}
+function selectExercise(id){
+  const ex = EX[id];
+  S.exId = id; S.pick[LESSONS[ex.lesson].id] = id; S.tier = ex.tier; save();
+  loadEditorFor(); renderWs(); renderPractice(); emptyOut();
+  const steps = stepsFor(LESSONS[S.lesson]);
+  if (ex.lesson === S.lesson && curStep !== steps.length - 1 && track) goTo(steps.length - 1, true);
+}
+function loadEditorFor(){
+  const ex = EX[S.exId];
+  const key = S.exId || "sandbox";
+  setEditor(S.codes[key] !== undefined ? S.codes[key] : (ex ? ex.starter : SANDBOX_CODE));
+}
+
+/* ================= CHROME ================= */
+$("#runBtn").onclick = run;
+$("#checkBtn").onclick = check;
+$("#clearBtn").onclick = emptyOut;
+armTwoStep($("#resetBtn"), "Click again to reset", () => {
+  const ex = EX[S.exId];
+  setEditor(ex ? ex.starter : SANDBOX_CODE);
+  S.codes[S.exId || "sandbox"] = ta.value; save(); hideFeedback(); emptyOut();
+});
+$("#levelSelect").onchange = e => {
+  S.level = e.target.value; S.tier = S.level;
+  const ex = EX[S.exId];
+  if (ex && ex.lesson === S.lesson && ex.tier !== S.tier) { S.exId = null; S.pick[LESSONS[S.lesson].id] = null; }
+  save(); renderDeck();
+  if (!S.exId) { loadEditorFor(); renderWs(); }
+};
+const menu = $("#lessonMenu"), switchBtn = $("#switchBtn");
+function closeMenu(){ menu.hidden = true; switchBtn.setAttribute("aria-expanded", "false"); }
+switchBtn.onclick = e => { e.stopPropagation(); const open = menu.hidden; menu.hidden = !open; switchBtn.setAttribute("aria-expanded", String(open)); };
+document.addEventListener("click", e => { if (!menu.hidden && !menu.contains(e.target)) closeMenu(); });
+document.addEventListener("keydown", e => { if (e.key === "Escape" && !menu.hidden) { closeMenu(); switchBtn.focus(); } });
+deckEl.addEventListener("keydown", e => {
+  if (e.target.closest("textarea, input, select, summary")) return;
+  if (e.key === "ArrowRight") { e.preventDefault(); goTo(curStep + 1, true); }
+  if (e.key === "ArrowLeft") { e.preventDefault(); goTo(curStep - 1, true); }
+});
+window.addEventListener("resize", () => { if (track) track.scrollLeft = curStep * track.clientWidth; });
+document.querySelectorAll(".level-card").forEach(c => c.onclick = () => {
+  S.level = c.dataset.level; S.tier = S.level; save();
+  $("#levelSelect").value = S.level;
+  $("#welcome").hidden = true; renderDeck();
+});
+
+function init(fresh){
+  if (!engineReady) $("#engineWarn").hidden = false;
+  $("#welcome").hidden = !!S.level && !fresh;
+  if (S.level) $("#levelSelect").value = S.level;
+  if (!EX[S.exId]) S.exId = null;
+  renderTrail(); loadEditorFor(); renderWs(); emptyOut(); hideFeedback(); renderDeck();
+}
+init();
+</script>
+</body>
+</html>
